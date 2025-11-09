@@ -77,6 +77,10 @@
         font-weight: 700;
       }
 
+      nav {
+        display: flex;
+      }
+
       nav a {
         margin-left: 18px;
         text-decoration: none;
@@ -87,6 +91,90 @@
 
       nav a:hover {
         color: var(--accent);
+      }
+
+      /* Hamburger Menu Styles */
+      .hamburger-menu {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .hamburger-menu span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: var(--accent);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger-menu.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+
+      .hamburger-menu.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger-menu.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: var(--card);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        z-index: 999;
+        padding: 80px 30px 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .sidebar.active {
+        right: 0;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 18px;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        transition: color 0.2s;
+      }
+
+      .sidebar a:hover {
+        color: var(--accent);
+      }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
       }
 
       .container {
@@ -180,8 +268,9 @@
       }
 
       .illustr {
-        width: 400px;
-        height: 400px;
+        /* PERUBAHAN: Ukuran gambar koki wanita diperbesar */
+        width: 450px;
+        height: 450px;
         border-radius: 24px;
         background: linear-gradient(180deg, #ffe9c9, #ffd9aa);
         display: flex;
@@ -468,8 +557,9 @@
         }
 
         .illustr {
-          width: 320px;
-          height: 320px;
+          /* PERUBAHAN: Ukuran gambar koki wanita untuk tablet */
+          width: 380px;
+          height: 380px;
         }
 
         #tentang ul {
@@ -480,6 +570,22 @@
           flex-direction: column;
           align-items: flex-start;
           gap: 5px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          display: none;
+        }
+
+        .hamburger-menu {
+          display: flex;
+        }
+
+        .illustr {
+          /* PERUBAHAN: Ukuran gambar koki wanita untuk mobile */
+          width: 340px;
+          height: 340px;
         }
       }
     </style>
@@ -500,7 +606,25 @@
         <a href="#tentang">Tentang</a>
         <a href="#kontak">Ulasan</a>
       </nav>
+
+      <!-- Hamburger Menu -->
+      <div class="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="#">Home</a>
+      <a href="#generator">Generator</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#kontak">Ulasan</a>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay"></div>
 
     <main class="container">
       <section class="hero">
@@ -611,6 +735,32 @@
       const clearBtn = document.getElementById('clearBtn');
       const reviewForm = document.getElementById('reviewForm');
       const reviewList = document.getElementById('reviewList');
+
+      // Hamburger menu elements
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
+      const sidebar = document.querySelector('.sidebar');
+      const overlay = document.querySelector('.overlay');
+
+      // Fungsi untuk toggle sidebar
+      function toggleSidebar() {
+        hamburgerMenu.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+      }
+
+      // Event listener untuk hamburger menu
+      hamburgerMenu.addEventListener('click', toggleSidebar);
+
+      // Event listener untuk overlay
+      overlay.addEventListener('click', toggleSidebar);
+
+      // Event listener untuk link di sidebar
+      sidebar.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          toggleSidebar();
+        });
+      });
 
       // Fungsi untuk memuat ulasan dari localStorage
       function loadReviews() {

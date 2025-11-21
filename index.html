@@ -762,20 +762,21 @@
           display: flex;
         }
 
-        /* PERUBAHAN BARU: Mengatur layout untuk mobile - gambar di bawah teks */
+        /* PERUBAHAN PENTING: Mengatur layout untuk mobile - gambar di ATAS teks */
         .hero {
-          flex-direction: column;
+          flex-direction: column-reverse; /* Diubah dari column menjadi column-reverse */
         }
 
         .hero-left {
-          order: 1;
+          order: 2; /* Diubah dari 1 menjadi 2 */
           width: 100%;
         }
 
         .hero-right {
-          order: 2;
+          order: 1; /* Diubah dari 2 menjadi 1 */
           width: 100%;
-          margin-top: 30px;
+          margin-top: 0; /* Diubah dari 30px menjadi 0 */
+          margin-bottom: 30px; /* Ditambahkan untuk memberi jarak bawah */
         }
 
         .illustr {

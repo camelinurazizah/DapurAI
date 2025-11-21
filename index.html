@@ -874,7 +874,7 @@
       </div>
 
       <nav>
-        <a href="#"><span>🏠</span> Home</a>
+        <a href="#" id="homeLink"><span>🏠</span> Home</a>
         <a href="#generator"><span>✨</span> Generator</a>
         <a href="#tentang"><span>ℹ️</span> Tentang</a>
         <a href="#kontak"><span>💬</span> Ulasan</a>
@@ -894,7 +894,7 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <a href="#"><span>🏠</span> Home</a>
+      <a href="#" id="homeLinkSidebar"><span>🏠</span> Home</a>
       <a href="#generator"><span>✨</span> Generator</a>
       <a href="#tentang"><span>ℹ️</span> Tentang</a>
       <a href="#kontak"><span>💬</span> Ulasan</a>
@@ -1019,6 +1019,10 @@
       const clearBtn = document.getElementById('clearBtn');
       const reviewForm = document.getElementById('reviewForm');
       const reviewList = document.getElementById('reviewList');
+      
+      // PERBAIKAN: Tambahkan variabel untuk home links
+      const homeLink = document.getElementById('homeLink');
+      const homeLinkSidebar = document.getElementById('homeLinkSidebar');
 
       // Hamburger menu elements
       const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -1070,6 +1074,26 @@
         link.addEventListener('click', () => {
           toggleSidebar();
         });
+      });
+
+      // PERBAIKAN: Fungsi untuk scroll ke home
+      function scrollToHome() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+
+      // PERBAIKAN: Event listener untuk home links
+      homeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToHome();
+      });
+
+      homeLinkSidebar.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToHome();
+        toggleSidebar();
       });
 
       // Fungsi untuk memuat ulasan dari localStorage

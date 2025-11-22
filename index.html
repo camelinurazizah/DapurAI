@@ -801,7 +801,7 @@
 
         /* PERUBAHAN: Memperbesar ukuran judul untuk mobile */
         h1 {
-          font-size: 42px; /* Diperbesar dari 36px */
+          font-size: 48px; /* Diperbesar dari 42px */
         }
 
         .search-card {
@@ -840,7 +840,7 @@
       @media (max-width: 480px) {
         /* PERUBAHAN: Memperbesar ukuran judul untuk perangkat kecil */
         h1 {
-          font-size: 36px; /* Diperbesar dari 32px */
+          font-size: 42px; /* Diperbesar dari 36px */
         }
 
         .illustr {
@@ -860,6 +860,20 @@
 
         footer {
           padding: 12px;
+        }
+      }
+
+      /* PERBAIKAN TAMBAHAN: Media query untuk perangkat dengan layar sangat kecil (di bawah 380px) */
+      @media (max-width: 380px) {
+        /* PERUBAHAN: Memperbesar ukuran judul untuk perangkat sangat kecil */
+        h1 {
+          font-size: 38px; /* Diperbesar dari 32px */
+        }
+
+        .illustr {
+          /* PERBAIKAN: Mengurangi ukuran gambar untuk perangkat sangat kecil */
+          width: 280px;
+          height: 280px;
         }
       }
     </style>

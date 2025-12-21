@@ -972,7 +972,8 @@
         <div class="ing-list" id="ingredientsList"></div>
         <div style="margin-top: 12px" id="steps"></div>
         <div class="controls">
-          <button class="small" id="saveFav"><span>❤️</span> Simpan</button>
+          <!-- PERUBAHAN: Tombol Simpan diubah menjadi Share -->
+          <button class="small" id="shareBtn"><span>📤</span> Share</button>
           <button class="small" id="clearBtn"><span>🧹</span> Bersihkan</button>
         </div>
       </section>
@@ -1005,12 +1006,12 @@
       </section>
 
       <section id="kontak">
-        <h2>📞 Kontak & Ulasan Pengguna</h2>
-        <p>Kirimkan saran dan pengalamanmu setelah menggunakan DapurAI 👇</p>
+        <h2>📞 Ulasan Pengguna</h2>
+        <p>Kirimkan saran dan pengalamanmu setelah menggunakan DapurAI 😊</p>
 
         <form id="reviewForm">
+          <!-- PERUBAHAN: Email dihapus, hanya Nama dan Pesan -->
           <input type="text" id="nama" placeholder="Nama Anda" required />
-          <input type="email" id="email" placeholder="Email Anda" required />
           <textarea id="pesan" rows="3" placeholder="Tulis ulasan Anda..." required></textarea>
           <button type="submit" class="primary"><span>📨</span> Kirim Ulasan</button>
         </form>
@@ -1030,11 +1031,12 @@
       const metaInfo = document.getElementById('metaInfo');
       const ingredientsList = document.getElementById('ingredientsList');
       const stepsEl = document.getElementById('steps');
-      const saveFav = document.getElementById('saveFav');
+      // PERUBAHAN: saveFav diubah menjadi shareBtn
+      const shareBtn = document.getElementById('shareBtn');
       const clearBtn = document.getElementById('clearBtn');
       const reviewForm = document.getElementById('reviewForm');
       const reviewList = document.getElementById('reviewList');
-      
+
       // PERBAIKAN: Tambahkan variabel untuk home links
       const homeLink = document.getElementById('homeLink');
       const homeLinkSidebar = document.getElementById('homeLinkSidebar');
@@ -1095,34 +1097,47 @@
       function scrollToHome() {
         window.scrollTo({
           top: 0,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
       }
 
       // PERBAIKAN: Event listener untuk home links
-      homeLink.addEventListener('click', function(e) {
+      homeLink.addEventListener('click', function (e) {
         e.preventDefault();
         scrollToHome();
       });
 
-      homeLinkSidebar.addEventListener('click', function(e) {
+      homeLinkSidebar.addEventListener('click', function (e) {
         e.preventDefault();
         scrollToHome();
         toggleSidebar();
       });
 
+      // ============================================
+      // SISTEM ULASAN YANG BERFUNGSI (DIUBAH)
+      // ============================================
+
       // Fungsi untuk memuat ulasan dari localStorage
       function loadReviews() {
         try {
-          return JSON.parse(localStorage.getItem('dapurai_reviews') || '[]');
+          const reviews = localStorage.getItem('dapurai_reviews');
+          if (!reviews) {
+            return [];
+          }
+          return JSON.parse(reviews);
         } catch (e) {
+          console.error('Error loading reviews:', e);
           return [];
         }
       }
 
       // Fungsi untuk menyimpan ulasan ke localStorage
       function saveReviews(reviews) {
-        localStorage.setItem('dapurai_reviews', JSON.stringify(reviews));
+        try {
+          localStorage.setItem('dapurai_reviews', JSON.stringify(reviews));
+        } catch (e) {
+          console.error('Error saving reviews:', e);
+        }
       }
 
       // Fungsi untuk menampilkan ulasan
@@ -1135,23 +1150,30 @@
           return;
         }
 
-        // Urutkan ulasan dari yang terbaru
+        // Urutkan ulasan dari yang terbaru (tanggal terbaru di atas)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        reviews.forEach((review) => {
+        // Batasi tampilan maksimal 20 ulasan terbaru
+        const recentReviews = reviews.slice(0, 20);
+
+        recentReviews.forEach((review) => {
           const reviewItem = document.createElement('div');
           reviewItem.className = 'review-item';
 
-          const date = new Date(review.date).toLocaleDateString('id-ID', {
+          // Format tanggal yang lebih rapi
+          const date = new Date(review.date);
+          const formattedDate = date.toLocaleDateString('id-ID', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
           });
 
           reviewItem.innerHTML = `
             <div class="review-header">
               <div class="review-name">${review.name}</div>
-              <div class="review-date">${date}</div>
+              <div class="review-date">${formattedDate}</div>
             </div>
             <div class="review-message">${review.message}</div>
           `;
@@ -1160,21 +1182,35 @@
         });
       }
 
-      // Fungsi untuk menangani pengiriman ulasan
+      // Fungsi untuk menangani pengiriman ulasan (DIUBAH)
       function handleReviewSubmit(e) {
         e.preventDefault();
 
-        const name = document.getElementById('nama').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('pesan').value;
+        const name = document.getElementById('nama').value.trim();
+        const message = document.getElementById('pesan').value.trim();
 
+        // Validasi input (DIUBAH: email tidak diperlukan lagi)
+        if (!name) {
+          alert('Harap masukkan nama Anda!');
+          document.getElementById('nama').focus();
+          return;
+        }
+
+        if (!message) {
+          alert('Harap tulis ulasan Anda!');
+          document.getElementById('pesan').focus();
+          return;
+        }
+
+        // Buat objek ulasan baru (DIUBAH: email dihapus)
         const newReview = {
-          name,
-          email,
-          message,
+          id: Date.now(), // ID unik berdasarkan timestamp
+          name: name,
+          message: message,
           date: new Date().toISOString(),
         };
 
+        // Ambil ulasan yang ada, tambahkan yang baru, lalu simpan
         const reviews = loadReviews();
         reviews.push(newReview);
         saveReviews(reviews);
@@ -1186,8 +1222,53 @@
         displayReviews();
 
         // Tampilkan pesan sukses
-        alert('Terima kasih! Ulasan Anda telah berhasil dikirim.');
+        alert('🎉 Terima kasih! Ulasan Anda telah berhasil dikirim.\nUlasan Anda sekarang bisa dilihat oleh pengguna lain.');
+
+        // Scroll ke bagian ulasan
+        setTimeout(() => {
+          document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
+
+      // Event listener untuk form ulasan
+      reviewForm.addEventListener('submit', handleReviewSubmit);
+
+      // Tampilkan ulasan saat halaman dimuat
+      document.addEventListener('DOMContentLoaded', function () {
+        displayReviews();
+
+        // Tambahkan beberapa ulasan contoh jika belum ada ulasan (DIUBAH: email dihapus)
+        const reviews = loadReviews();
+        if (reviews.length === 0) {
+          const sampleReviews = [
+            {
+              id: 1,
+              name: 'Sari Budianto',
+              message: 'DapurAI sangat membantu saya sebagai ibu rumah tangga yang sering bingung mau masak apa. Fitur generator resepnya sangat praktis!',
+              date: '2024-03-15T10:30:00.000Z',
+            },
+            {
+              id: 2,
+              name: 'Andi Pratama',
+              message: 'Sebagai mahasiswa yang tinggal kos, aplikasi ini sangat berguna untuk memanfaatkan bahan makanan yang ada. Resepnya simpel dan mudah diikuti!',
+              date: '2024-03-14T14:20:00.000Z',
+            },
+            {
+              id: 3,
+              name: 'Dewi Lestari',
+              message: 'Saya suka fitur masakan sehatnya. Sudah coba beberapa resep dan hasilnya enak! Anak-anak juga suka. Terima kasih DapurAI!',
+              date: '2024-03-13T09:15:00.000Z',
+            },
+          ];
+
+          saveReviews(sampleReviews);
+          displayReviews();
+        }
+      });
+
+      // ============================================
+      // FUNGSI-FUNGSI LAINNYA
+      // ============================================
 
       function normalizeList(text) {
         return text
@@ -1259,38 +1340,116 @@
         stepsEl.innerHTML = '';
       });
 
-      function getFavs() {
-        try {
-          return JSON.parse(localStorage.getItem('dapurai_favs') || '[]');
-        } catch (e) {
-          return [];
-        }
-      }
+      // ============================================
+      // FUNGSI SHARE RESEP
+      // ============================================
 
-      function saveFavRecipe() {
+      // Fungsi untuk membagikan resep
+      function shareRecipe() {
         const title = recipeTitle.textContent;
+
+        // Validasi: cek apakah ada resep yang bisa dibagikan
         if (!title || title.startsWith('Hasil')) {
-          alert('Tidak ada resep untuk disimpan.');
+          alert('Tidak ada resep untuk dibagikan. Silahkan generate resep terlebih dahulu!');
           return;
         }
-        const favs = getFavs();
-        favs.push({ title, ingredients: ingredientsInput.value, generatedAt: new Date().toISOString() });
-        localStorage.setItem('dapurai_favs', JSON.stringify(favs));
-        alert('Resep tersimpan di koleksi!');
+
+        // Ambil semua informasi resep
+        const ingredientsText = Array.from(ingredientsList.querySelectorAll('.ing'))
+          .map((ing) => ing.textContent)
+          .join(', ');
+
+        const stepsText = Array.from(stepsEl.querySelectorAll('li'))
+          .map((li, index) => `${index + 1}. ${li.textContent}`)
+          .join('\n');
+
+        const timeMatch = metaInfo.textContent.match(/Estimasi waktu:.*?(\d+)/);
+        const caloriesMatch = metaInfo.textContent.match(/Perkiraan kalori:.*?(\d+)/);
+
+        const time = timeMatch ? timeMatch[1] + ' menit' : '';
+        const calories = caloriesMatch ? caloriesMatch[1] + ' kkal' : '';
+
+        // Buat teks untuk dibagikan
+        const shareText = `🍽️ *${title}* 🍽️
+
+🥗 *Bahan-bahan:*
+${ingredientsText}
+
+👩‍🍳 *Cara Membuat:*
+${stepsText}
+
+⏱️ *Waktu: ${time}*
+🔥 *Kalori: ${calories}*
+
+✨ Dibuat dengan *DapurAI* - Generator Resep Pintar
+🌐 Coba di: ${window.location.origin}`;
+
+        // Cek apakah Web Share API didukung
+        if (navigator.share) {
+          // Gunakan Web Share API untuk perangkat modern
+          navigator
+            .share({
+              title: `${title} - Resep DapurAI`,
+              text: shareText,
+              url: window.location.href,
+            })
+            .then(() => {
+              console.log('Resep berhasil dibagikan!');
+            })
+            .catch((error) => {
+              console.log('Error sharing:', error);
+              // Fallback: copy ke clipboard
+              copyToClipboard(shareText);
+            });
+        } else {
+          // Fallback: copy ke clipboard
+          copyToClipboard(shareText);
+        }
       }
 
-      saveFav.addEventListener('click', saveFavRecipe);
+      // Fungsi untuk menyalin teks ke clipboard
+      function copyToClipboard(text) {
+        // Buat elemen textarea sementara
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+
+        // Tambahkan ke dokumen
+        document.body.appendChild(textarea);
+
+        // Pilih dan salin teks
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // Untuk perangkat mobile
+
+        try {
+          // Coba salin menggunakan Clipboard API
+          const successful = document.execCommand('copy');
+
+          if (successful) {
+            alert('✅ Resep berhasil disalin ke clipboard!\n\nAnda dapat membagikannya melalui WhatsApp, Instagram, atau media sosial lainnya.');
+          } else {
+            // Fallback: tampilkan teks untuk disalin manual
+            alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
+          }
+        } catch (err) {
+          console.error('Gagal menyalin teks:', err);
+          // Tampilkan teks untuk disalin manual
+          alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
+        }
+
+        // Hapus elemen textarea
+        document.body.removeChild(textarea);
+      }
+
+      // Event listener untuk tombol Share
+      shareBtn.addEventListener('click', shareRecipe);
 
       ingredientsInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') generateBtn.click();
       });
 
-      // Event listener untuk form ulasan
-      reviewForm.addEventListener('submit', handleReviewSubmit);
-
-      // Tampilkan ulasan saat halaman dimuat
-      document.addEventListener('DOMContentLoaded', displayReviews);
-
+      // Event listener untuk fokus elemen
       document.querySelectorAll('button,input,select').forEach((el) => el.addEventListener('focus', () => (el.style.outline = '2px solid rgba(248, 88, 168, 0.2)')));
     </script>
   </body>

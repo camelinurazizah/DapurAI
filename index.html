@@ -1114,7 +1114,7 @@
       });
 
       // ============================================
-      // SISTEM ULASAN YANG BERFUNGSI (DIUBAH)
+      // SISTEM ULASAN YANG BERFUNGSI OTOMATIS
       // ============================================
 
       // Fungsi untuk memuat ulasan dari localStorage
@@ -1182,14 +1182,14 @@
         });
       }
 
-      // Fungsi untuk menangani pengiriman ulasan (DIUBAH)
+      // Fungsi untuk menangani pengiriman ulasan
       function handleReviewSubmit(e) {
         e.preventDefault();
 
         const name = document.getElementById('nama').value.trim();
         const message = document.getElementById('pesan').value.trim();
 
-        // Validasi input (DIUBAH: email tidak diperlukan lagi)
+        // Validasi input
         if (!name) {
           alert('Harap masukkan nama Anda!');
           document.getElementById('nama').focus();
@@ -1202,7 +1202,7 @@
           return;
         }
 
-        // Buat objek ulasan baru (DIUBAH: email dihapus)
+        // Buat objek ulasan baru
         const newReview = {
           id: Date.now(), // ID unik berdasarkan timestamp
           name: name,
@@ -1237,9 +1237,10 @@
       document.addEventListener('DOMContentLoaded', function () {
         displayReviews();
 
-        // Tambahkan beberapa ulasan contoh jika belum ada ulasan (DIUBAH: email dihapus)
+        // Hanya tambahkan ulasan contoh jika benar-benar kosong
         const reviews = loadReviews();
         if (reviews.length === 0) {
+          // Ulasan contoh hanya ditambahkan sekali saat aplikasi pertama kali dijalankan
           const sampleReviews = [
             {
               id: 1,
@@ -1258,18 +1259,6 @@
               name: 'Dewi Lestari',
               message: 'Saya suka fitur masakan sehatnya. Sudah coba beberapa resep dan hasilnya enak! Anak-anak juga suka. Terima kasih DapurAI!',
               date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 hari lalu
-            },
-            {
-              id: 4,
-              name: 'Budi Santoso',
-              message: 'Baru pertama kali mencoba DapurAI dan langsung menemukan resep yang pas untuk makan malam. Prosesnya cepat dan hasilnya lezat!',
-              date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 hari lalu
-            },
-            {
-              id: 5,
-              name: 'Maya Indah',
-              message: 'Sangat membantu saat bingung mau masak apa dari bahan seadanya. Sekarang tidak perlu lagi membuang bahan makanan yang tersisa!',
-              date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 hari lalu
             },
           ];
 

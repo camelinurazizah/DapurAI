@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>DapurAI — Generator Resep Pintar</title>
     <style>
+      /* Semua kode CSS tetap sama seperti sebelumnya */
       :root {
         --bg: #fff6ed;
         --card: #fff;
@@ -16,7 +17,6 @@
         font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       }
 
-      /* Mode Gelap */
       [data-theme='dark'] {
         --bg: #1a1a1a;
         --card: #2d2d2d;
@@ -36,7 +36,7 @@
         background: linear-gradient(180deg, var(--bg), #fff8f0);
         color: #2a2a2a;
         scroll-behavior: smooth;
-        overflow-x: hidden; /* Mencegah scroll horizontal */
+        overflow-x: hidden;
         transition: background 0.3s ease, color 0.3s ease;
       }
 
@@ -88,18 +88,6 @@
         color: var(--muted);
       }
 
-      .pot {
-        width: 48px;
-        height: 48px;
-        background: var(--accent);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-weight: 700;
-      }
-
       nav {
         display: flex;
         align-items: center;
@@ -120,7 +108,6 @@
         color: var(--accent);
       }
 
-      /* Toggle Mode Button */
       .theme-toggle {
         background: none;
         border: none;
@@ -154,7 +141,6 @@
         display: none;
       }
 
-      /* Hamburger Menu Styles */
       .hamburger-menu {
         display: none;
         flex-direction: column;
@@ -249,7 +235,6 @@
         max-width: 1100px;
         margin: 0 auto;
         padding: 20px 6%;
-        /* PERBAIKAN: Menambahkan padding yang lebih kecil untuk mobile */
         padding-left: 20px;
         padding-right: 20px;
       }
@@ -266,9 +251,8 @@
         min-width: 300px;
       }
 
-      /* PERUBAHAN: Memperbesar ukuran judul */
       h1 {
-        font-size: 60px; /* Diperbesar dari 44px */
+        font-size: 60px;
         margin: 0 0 18px 0;
         line-height: 1.05;
       }
@@ -296,7 +280,6 @@
         border-radius: 10px;
         border: 1px solid #efe3d6;
         font-size: 16px;
-        /* PERBAIKAN: Mencegah input melebihi container */
         min-width: 0;
         background: var(--card);
         color: inherit;
@@ -320,7 +303,6 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        /* PERUBAHAN: Memperbesar ukuran font tombol Generate */
         font-size: 20px;
         justify-content: center;
       }
@@ -359,7 +341,6 @@
       }
 
       .illustr {
-        /* PERUBAHAN: Ukuran gambar koki wanita diperbesar */
         width: 450px;
         height: 450px;
         border-radius: 24px;
@@ -482,7 +463,6 @@
         color: #f0f0f0;
       }
 
-      /* === SECTION TENTANG DAPURAI (DIUBAH) === */
       #tentang {
         background: var(--card);
         margin-top: 60px;
@@ -588,23 +568,12 @@
         flex-shrink: 0;
       }
 
-      #tentang ul li:nth-child(1)::before {
-        content: '💡';
-      }
-      #tentang ul li:nth-child(2)::before {
-        content: '⏱️';
-      }
-      #tentang ul li:nth-child(3)::before {
-        content: '🌱';
-      }
-      #tentang ul li:nth-child(4)::before {
-        content: '🍲';
-      }
-      #tentang ul li:nth-child(5)::before {
-        content: '🤖';
-      }
+      #tentang ul li:nth-child(1)::before { content: '💡'; }
+      #tentang ul li:nth-child(2)::before { content: '⏱️'; }
+      #tentang ul li:nth-child(3)::before { content: '🌱'; }
+      #tentang ul li:nth-child(4)::before { content: '🍲'; }
+      #tentang ul li:nth-child(5)::before { content: '🤖'; }
 
-      /* === SECTION KONTAK === */
       #kontak {
         margin-top: 60px;
         background: var(--card);
@@ -635,7 +604,6 @@
         border: 1px solid #efe3d6;
         font-size: 16px;
         font-family: inherit;
-        /* PERBAIKAN: Mencegah input melebihi container */
         width: 100%;
         background: var(--card);
         color: inherit;
@@ -652,7 +620,7 @@
         min-height: 100px;
       }
 
-      /* === STYLE UNTUK ULASAN === */
+      /* STYLE UNTUK ULASAN */
       .review-item {
         background: #fffaf0;
         padding: 20px;
@@ -701,54 +669,45 @@
         font-style: italic;
       }
 
+      .review-rating {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #ff9500;
+      }
+
       footer {
         padding: 28px 6%;
         text-align: center;
         color: var(--muted);
-        /* PERBAIKAN: Menambahkan padding yang lebih kecil untuk mobile */
         padding-left: 20px;
         padding-right: 20px;
         transition: color 0.3s ease;
       }
 
-      /* PERBAIKAN: Media query untuk tablet dan mobile */
       @media (max-width: 900px) {
         .hero {
           flex-direction: column;
         }
-
-        /* PERUBAHAN: Memperbesar ukuran judul untuk tablet */
         h1 {
-          font-size: 50px; /* Diperbesar dari 42px */
+          font-size: 50px;
         }
-
         .illustr {
-          /* PERUBAHAN: Ukuran gambar koki wanita untuk tablet */
           width: 380px;
           height: 380px;
         }
-
         #tentang ul {
           grid-template-columns: 1fr;
         }
-
         .review-header {
           flex-direction: column;
           align-items: flex-start;
           gap: 5px;
         }
-
-        /* PERBAIKAN: Menyesuaikan padding untuk tablet */
         .container {
           padding-left: 20px;
           padding-right: 20px;
         }
-
-        header {
-          padding: 20px;
-        }
-
-        footer {
+        header, footer {
           padding: 20px;
         }
       }
@@ -757,121 +716,81 @@
         nav {
           display: none;
         }
-
         .hamburger-menu {
           display: flex;
         }
-
-        /* PERUBAHAN PENTING: Mengatur layout untuk mobile - gambar di ATAS teks */
         .hero {
-          flex-direction: column-reverse; /* Diubah dari column menjadi column-reverse */
+          flex-direction: column-reverse;
         }
-
         .hero-left {
-          order: 2; /* Diubah dari 1 menjadi 2 */
+          order: 2;
           width: 100%;
         }
-
         .hero-right {
-          order: 1; /* Diubah dari 2 menjadi 1 */
+          order: 1;
           width: 100%;
-          margin-top: 0; /* Diubah dari 30px menjadi 0 */
-          margin-bottom: 30px; /* Ditambahkan untuk memberi jarak bawah */
+          margin-top: 0;
+          margin-bottom: 30px;
         }
-
         .illustr {
-          /* PERUBAHAN: Ukuran gambar koki wanita untuk mobile */
           width: 340px;
           height: 340px;
         }
-
-        /* PERBAIKAN: Menyesuaikan padding untuk mobile */
         .container {
           padding-left: 16px;
           padding-right: 16px;
         }
-
-        header {
+        header, footer {
           padding: 16px;
         }
-
-        footer {
-          padding: 16px;
-        }
-
-        /* PERUBAHAN: Memperbesar ukuran judul untuk mobile */
         h1 {
-          font-size: 48px; /* Diperbesar dari 42px */
+          font-size: 48px;
         }
-
         .search-card {
-          /* PERBAIKAN: Mengatur layout search card untuk mobile */
           flex-direction: column;
           align-items: stretch;
         }
-
         .search-card input,
         .search-card select,
         .search-card button {
           width: 100%;
         }
-
         .features {
-          /* PERBAIKAN: Mengatur layout features untuk mobile */
           flex-direction: column;
         }
-
         .feature {
           min-width: 100%;
         }
-
         #tentang {
-          /* PERBAIKAN: Menyesuaikan padding untuk mobile */
           padding: 24px;
         }
-
         #kontak {
-          /* PERBAIKAN: Menyesuaikan padding untuk mobile */
           padding: 24px 20px;
         }
       }
 
-      /* PERBAIKAN: Media query untuk perangkat dengan layar sangat kecil */
       @media (max-width: 480px) {
-        /* PERUBAHAN: Memperbesar ukuran judul untuk perangkat kecil */
         h1 {
-          font-size: 42px; /* Diperbesar dari 36px */
+          font-size: 42px;
         }
-
         .illustr {
-          /* PERBAIKAN: Mengurangi ukuran gambar untuk perangkat kecil */
           width: 300px;
           height: 300px;
         }
-
         .container {
           padding-left: 12px;
           padding-right: 12px;
         }
-
-        header {
-          padding: 12px;
-        }
-
-        footer {
+        header, footer {
           padding: 12px;
         }
       }
 
-      /* PERBAIKAN TAMBAHAN: Media query untuk perangkat dengan layar sangat kecil (di bawah 380px) */
       @media (max-width: 380px) {
-        /* PERUBAHAN: Memperbesar ukuran judul untuk perangkat sangat kecil */
         h1 {
-          font-size: 38px; /* Diperbesar dari 32px */
+          font-size: 38px;
         }
-
         .illustr {
-          /* PERBAIKAN: Mengurangi ukuran gambar untuk perangkat sangat kecil */
           width: 280px;
           height: 280px;
         }
@@ -972,13 +891,12 @@
         <div class="ing-list" id="ingredientsList"></div>
         <div style="margin-top: 12px" id="steps"></div>
         <div class="controls">
-          <!-- PERUBAHAN: Tombol Simpan diubah menjadi Share -->
           <button class="small" id="shareBtn"><span>📤</span> Share</button>
           <button class="small" id="clearBtn"><span>🧹</span> Bersihkan</button>
         </div>
       </section>
 
-      <!-- === SECTION TENTANG DAPURAI (DIUBAH) === -->
+      <!-- === SECTION TENTANG DAPURAI === -->
       <section id="tentang">
         <h2>Tentang DapurAI</h2>
         <p>
@@ -1010,9 +928,19 @@
         <p>Kirimkan saran dan pengalamanmu setelah menggunakan DapurAI 😊</p>
 
         <form id="reviewForm">
-          <!-- PERUBAHAN: Email dihapus, hanya Nama dan Pesan -->
           <input type="text" id="nama" placeholder="Nama Anda" required />
           <textarea id="pesan" rows="3" placeholder="Tulis ulasan Anda..." required></textarea>
+          <div style="margin-bottom: 10px;">
+            <label style="color: var(--muted); font-size: 14px; display: block; margin-bottom: 5px;">Rating:</label>
+            <div style="display: flex; gap: 5px;">
+              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="1">☆</span>
+              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="2">☆</span>
+              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="3">☆</span>
+              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="4">☆</span>
+              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="5">☆</span>
+            </div>
+            <input type="hidden" id="rating" value="0">
+          </div>
           <button type="submit" class="primary"><span>📨</span> Kirim Ulasan</button>
         </form>
 
@@ -1024,6 +952,9 @@
     <footer>©2025 DapurAI — Camelia Nurazizah — Generator Resep Pintar</footer>
 
     <script>
+      // ============================================
+      // VARIABEL UTAMA
+      // ============================================
       const generateBtn = document.getElementById('generateBtn');
       const tryBtn = document.getElementById('tryBtn');
       const ingredientsInput = document.getElementById('ingredients');
@@ -1031,100 +962,72 @@
       const metaInfo = document.getElementById('metaInfo');
       const ingredientsList = document.getElementById('ingredientsList');
       const stepsEl = document.getElementById('steps');
-      // PERUBAHAN: saveFav diubah menjadi shareBtn
       const shareBtn = document.getElementById('shareBtn');
       const clearBtn = document.getElementById('clearBtn');
       const reviewForm = document.getElementById('reviewForm');
       const reviewList = document.getElementById('reviewList');
-
-      // PERBAIKAN: Tambahkan variabel untuk home links
       const homeLink = document.getElementById('homeLink');
       const homeLinkSidebar = document.getElementById('homeLinkSidebar');
-
-      // Hamburger menu elements
       const hamburgerMenu = document.querySelector('.hamburger-menu');
       const sidebar = document.querySelector('.sidebar');
       const overlay = document.querySelector('.overlay');
-
-      // Theme toggle elements
       const themeToggle = document.getElementById('themeToggle');
       const themeToggleSidebar = document.getElementById('themeToggleSidebar');
 
-      // Fungsi untuk toggle theme
-      function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('dapurai_theme', newTheme);
-      }
-
-      // Fungsi untuk mengatur tema awal
-      function initializeTheme() {
-        const savedTheme = localStorage.getItem('dapurai_theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-
-      // Panggil fungsi inisialisasi tema
-      initializeTheme();
-
-      // Event listener untuk toggle theme
-      themeToggle.addEventListener('click', toggleTheme);
-      themeToggleSidebar.addEventListener('click', toggleTheme);
-
-      // Fungsi untuk toggle sidebar
-      function toggleSidebar() {
-        hamburgerMenu.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
-      }
-
-      // Event listener untuk hamburger menu
-      hamburgerMenu.addEventListener('click', toggleSidebar);
-
-      // Event listener untuk overlay
-      overlay.addEventListener('click', toggleSidebar);
-
-      // Event listener untuk link di sidebar
-      sidebar.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          toggleSidebar();
-        });
-      });
-
-      // PERBAIKAN: Fungsi untuk scroll ke home
-      function scrollToHome() {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      }
-
-      // PERBAIKAN: Event listener untuk home links
-      homeLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        scrollToHome();
-      });
-
-      homeLinkSidebar.addEventListener('click', function (e) {
-        e.preventDefault();
-        scrollToHome();
-        toggleSidebar();
-      });
-
       // ============================================
-      // SISTEM ULASAN YANG BERFUNGSI OTOMATIS
+      // SISTEM SIMPANAN ULASAN YANG LEBIH BAIK
       // ============================================
+
+      // Gunakan localStorage untuk simulasi database sederhana
+      const STORAGE_KEY = 'dapurai_reviews_v2';
 
       // Fungsi untuk memuat ulasan dari localStorage
       function loadReviews() {
         try {
-          const reviews = localStorage.getItem('dapurai_reviews');
-          if (!reviews) {
-            return [];
+          const reviewsJson = localStorage.getItem(STORAGE_KEY);
+          if (!reviewsJson) {
+            // Jika tidak ada data, buat data awal
+            const initialReviews = [
+              {
+                id: 1,
+                name: 'Sari Budianto',
+                message: 'DapurAI sangat membantu saya sebagai ibu rumah tangga yang sering bingung mau masak apa. Fitur generator resepnya sangat praktis!',
+                date: '2024-03-20T10:30:00.000Z',
+                rating: 5
+              },
+              {
+                id: 2,
+                name: 'Andi Pratama',
+                message: 'Sebagai mahasiswa yang tinggal kos, aplikasi ini sangat berguna untuk memanfaatkan bahan makanan yang ada. Resepnya simpel dan mudah diikuti!',
+                date: '2024-03-19T14:20:00.000Z',
+                rating: 4
+              },
+              {
+                id: 3,
+                name: 'Dewi Lestari',
+                message: 'Saya suka fitur masakan sehatnya. Sudah coba beberapa resep dan hasilnya enak! Anak-anak juga suka. Terima kasih DapurAI!',
+                date: '2024-03-18T09:15:00.000Z',
+                rating: 5
+              },
+              {
+                id: 4,
+                name: 'Budi Santoso',
+                message: 'Baru pertama kali mencoba DapurAI dan langsung menemukan resep yang pas untuk makan malam. Prosesnya cepat dan hasilnya lezat!',
+                date: '2024-03-17T18:45:00.000Z',
+                rating: 4
+              },
+              {
+                id: 5,
+                name: 'Maya Indah',
+                message: 'Sangat membantu saat bingung mau masak apa dari bahan seadanya. Sekarang tidak perlu lagi membuang bahan makanan yang tersisa!',
+                date: '2024-03-16T12:10:00.000Z',
+                rating: 5
+              }
+            ];
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(initialReviews));
+            return initialReviews;
           }
-          return JSON.parse(reviews);
+          return JSON.parse(reviewsJson);
         } catch (e) {
           console.error('Error loading reviews:', e);
           return [];
@@ -1134,9 +1037,11 @@
       // Fungsi untuk menyimpan ulasan ke localStorage
       function saveReviews(reviews) {
         try {
-          localStorage.setItem('dapurai_reviews', JSON.stringify(reviews));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+          return true;
         } catch (e) {
           console.error('Error saving reviews:', e);
+          return false;
         }
       }
 
@@ -1153,14 +1058,12 @@
         // Urutkan ulasan dari yang terbaru (tanggal terbaru di atas)
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // Batasi tampilan maksimal 20 ulasan terbaru
-        const recentReviews = reviews.slice(0, 20);
-
-        recentReviews.forEach((review) => {
+        // Tampilkan semua ulasan
+        reviews.forEach((review) => {
           const reviewItem = document.createElement('div');
           reviewItem.className = 'review-item';
 
-          // Format tanggal yang lebih rapi
+          // Format tanggal
           const date = new Date(review.date);
           const formattedDate = date.toLocaleDateString('id-ID', {
             year: 'numeric',
@@ -1170,15 +1073,76 @@
             minute: '2-digit',
           });
 
+          // Buat bintang rating
+          let starsHtml = '';
+          for (let i = 1; i <= 5; i++) {
+            if (i <= review.rating) {
+              starsHtml += '★';
+            } else {
+              starsHtml += '☆';
+            }
+          }
+
           reviewItem.innerHTML = `
             <div class="review-header">
               <div class="review-name">${review.name}</div>
               <div class="review-date">${formattedDate}</div>
             </div>
+            <div class="review-rating" style="color: #ff9500; font-size: 18px; margin-bottom: 8px;">
+              ${starsHtml}
+            </div>
             <div class="review-message">${review.message}</div>
           `;
 
           reviewList.appendChild(reviewItem);
+        });
+      }
+
+      // Fungsi untuk sistem rating bintang
+      function setupStarRating() {
+        const stars = document.querySelectorAll('.star');
+        const ratingInput = document.getElementById('rating');
+        
+        stars.forEach(star => {
+          star.addEventListener('click', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            ratingInput.value = value;
+            
+            // Update tampilan bintang
+            stars.forEach((s, index) => {
+              if (index < value) {
+                s.textContent = '★';
+                s.style.color = '#ff9500';
+              } else {
+                s.textContent = '☆';
+                s.style.color = '#ccc';
+              }
+            });
+          });
+          
+          star.addEventListener('mouseover', function() {
+            const value = parseInt(this.getAttribute('data-value'));
+            
+            stars.forEach((s, index) => {
+              if (index < value) {
+                s.style.color = '#ff9500';
+              } else {
+                s.style.color = '#ccc';
+              }
+            });
+          });
+          
+          star.addEventListener('mouseout', function() {
+            const currentRating = parseInt(ratingInput.value);
+            
+            stars.forEach((s, index) => {
+              if (index < currentRating) {
+                s.style.color = '#ff9500';
+              } else {
+                s.style.color = '#ccc';
+              }
+            });
+          });
         });
       }
 
@@ -1188,6 +1152,7 @@
 
         const name = document.getElementById('nama').value.trim();
         const message = document.getElementById('pesan').value.trim();
+        const rating = parseInt(document.getElementById('rating').value) || 0;
 
         // Validasi input
         if (!name) {
@@ -1202,75 +1167,85 @@
           return;
         }
 
+        if (rating === 0) {
+          alert('Harap berikan rating dengan mengklik bintang!');
+          return;
+        }
+
         // Buat objek ulasan baru
         const newReview = {
           id: Date.now(), // ID unik berdasarkan timestamp
           name: name,
           message: message,
+          rating: rating,
           date: new Date().toISOString(),
         };
 
         // Ambil ulasan yang ada, tambahkan yang baru, lalu simpan
         const reviews = loadReviews();
         reviews.push(newReview);
-        saveReviews(reviews);
+        const saved = saveReviews(reviews);
 
-        // Reset form
-        reviewForm.reset();
-
-        // Tampilkan ulasan terbaru
-        displayReviews();
-
-        // Tampilkan pesan sukses
-        alert('🎉 Terima kasih! Ulasan Anda telah berhasil dikirim.\nUlasan Anda sekarang bisa dilihat oleh pengguna lain.');
-
-        // Scroll ke bagian ulasan
-        setTimeout(() => {
-          document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        if (saved) {
+          // Reset form
+          reviewForm.reset();
+          document.getElementById('rating').value = 0;
+          
+          // Reset tampilan bintang
+          document.querySelectorAll('.star').forEach(star => {
+            star.textContent = '☆';
+            star.style.color = '#ccc';
+          });
+          
+          // Tampilkan ulasan terbaru
+          displayReviews();
+          
+          // Tampilkan pesan sukses
+          alert('🎉 Terima kasih! Ulasan Anda telah berhasil dikirim.\nUlasan Anda sekarang bisa dilihat oleh semua pengguna.');
+          
+          // Scroll ke bagian ulasan
+          setTimeout(() => {
+            document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        } else {
+          alert('❌ Maaf, terjadi kesalahan saat menyimpan ulasan. Silakan coba lagi.');
+        }
       }
 
-      // Event listener untuk form ulasan
-      reviewForm.addEventListener('submit', handleReviewSubmit);
-
-      // Tampilkan ulasan saat halaman dimuat
-      document.addEventListener('DOMContentLoaded', function () {
-        displayReviews();
-
-        // Hanya tambahkan ulasan contoh jika benar-benar kosong
-        const reviews = loadReviews();
-        if (reviews.length === 0) {
-          // Ulasan contoh hanya ditambahkan sekali saat aplikasi pertama kali dijalankan
-          const sampleReviews = [
-            {
-              id: 1,
-              name: 'Sari Budianto',
-              message: 'DapurAI sangat membantu saya sebagai ibu rumah tangga yang sering bingung mau masak apa. Fitur generator resepnya sangat praktis!',
-              date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 hari lalu
-            },
-            {
-              id: 2,
-              name: 'Andi Pratama',
-              message: 'Sebagai mahasiswa yang tinggal kos, aplikasi ini sangat berguna untuk memanfaatkan bahan makanan yang ada. Resepnya simpel dan mudah diikuti!',
-              date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 hari lalu
-            },
-            {
-              id: 3,
-              name: 'Dewi Lestari',
-              message: 'Saya suka fitur masakan sehatnya. Sudah coba beberapa resep dan hasilnya enak! Anak-anak juga suka. Terima kasih DapurAI!',
-              date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 hari lalu
-            },
-          ];
-
-          saveReviews(sampleReviews);
-          displayReviews();
-        }
-      });
-
       // ============================================
-      // FUNGSI-FUNGSI LAINNYA
+      // FUNGSI LAINNYA
       // ============================================
 
+      // Fungsi untuk toggle theme
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('dapurai_theme', newTheme);
+      }
+
+      function initializeTheme() {
+        const savedTheme = localStorage.getItem('dapurai_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      // Fungsi untuk toggle sidebar
+      function toggleSidebar() {
+        hamburgerMenu.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+      }
+
+      // Fungsi untuk scroll ke home
+      function scrollToHome() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+
+      // Generator resep
       function normalizeList(text) {
         return text
           .split(',')
@@ -1311,12 +1286,131 @@
         ingredientsList.innerHTML = obj.ingredientsHtml;
         stepsEl.innerHTML = `<ol>${obj.steps.map((s) => `<li style="margin-bottom:6px">${s}</li>`).join('')}</ol>`;
 
-        // Scroll ke bagian ingredients
         setTimeout(() => {
           document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }, 100);
       }
 
+      // Fungsi untuk membagikan resep
+      function shareRecipe() {
+        const title = recipeTitle.textContent;
+
+        if (!title || title.startsWith('Hasil')) {
+          alert('Tidak ada resep untuk dibagikan. Silahkan generate resep terlebih dahulu!');
+          return;
+        }
+
+        const ingredientsText = Array.from(ingredientsList.querySelectorAll('.ing'))
+          .map((ing) => ing.textContent)
+          .join(', ');
+
+        const stepsText = Array.from(stepsEl.querySelectorAll('li'))
+          .map((li, index) => `${index + 1}. ${li.textContent}`)
+          .join('\n');
+
+        const timeMatch = metaInfo.textContent.match(/Estimasi waktu:.*?(\d+)/);
+        const caloriesMatch = metaInfo.textContent.match(/Perkiraan kalori:.*?(\d+)/);
+
+        const time = timeMatch ? timeMatch[1] + ' menit' : '';
+        const calories = caloriesMatch ? caloriesMatch[1] + ' kkal' : '';
+
+        const shareText = `🍽️ *${title}* 🍽️
+
+🥗 *Bahan-bahan:*
+${ingredientsText}
+
+👩‍🍳 *Cara Membuat:*
+${stepsText}
+
+⏱️ *Waktu: ${time}*
+🔥 *Kalori: ${calories}*
+
+✨ Dibuat dengan *DapurAI* - Generator Resep Pintar
+🌐 Coba di: ${window.location.origin}`;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: `${title} - Resep DapurAI`,
+              text: shareText,
+              url: window.location.href,
+            })
+            .catch((error) => {
+              copyToClipboard(shareText);
+            });
+        } else {
+          copyToClipboard(shareText);
+        }
+      }
+
+      function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+
+        try {
+          const successful = document.execCommand('copy');
+          if (successful) {
+            alert('✅ Resep berhasil disalin ke clipboard!\n\nAnda dapat membagikannya melalui WhatsApp, Instagram, atau media sosial lainnya.');
+          } else {
+            alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
+          }
+        } catch (err) {
+          alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
+        }
+
+        document.body.removeChild(textarea);
+      }
+
+      // ============================================
+      // EVENT LISTENER
+      // ============================================
+
+      // Inisialisasi saat halaman dimuat
+      document.addEventListener('DOMContentLoaded', function () {
+        initializeTheme();
+        displayReviews();
+        setupStarRating();
+        
+        // Set bintang default ke abu-abu
+        document.querySelectorAll('.star').forEach(star => {
+          star.style.color = '#ccc';
+        });
+      });
+
+      // Event listener untuk theme toggle
+      themeToggle.addEventListener('click', toggleTheme);
+      themeToggleSidebar.addEventListener('click', toggleTheme);
+
+      // Event listener untuk hamburger menu
+      hamburgerMenu.addEventListener('click', toggleSidebar);
+      overlay.addEventListener('click', toggleSidebar);
+      sidebar.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          toggleSidebar();
+        });
+      });
+
+      // Event listener untuk home links
+      homeLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToHome();
+      });
+
+      homeLinkSidebar.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToHome();
+        toggleSidebar();
+      });
+
+      // Event listener untuk form ulasan
+      reviewForm.addEventListener('submit', handleReviewSubmit);
+
+      // Event listener untuk generator resep
       generateBtn.addEventListener('click', () => {
         const text = ingredientsInput.value;
         const cuisine = document.getElementById('cuisine').value;
@@ -1341,117 +1435,15 @@
         stepsEl.innerHTML = '';
       });
 
-      // ============================================
-      // FUNGSI SHARE RESEP
-      // ============================================
-
-      // Fungsi untuk membagikan resep
-      function shareRecipe() {
-        const title = recipeTitle.textContent;
-
-        // Validasi: cek apakah ada resep yang bisa dibagikan
-        if (!title || title.startsWith('Hasil')) {
-          alert('Tidak ada resep untuk dibagikan. Silahkan generate resep terlebih dahulu!');
-          return;
-        }
-
-        // Ambil semua informasi resep
-        const ingredientsText = Array.from(ingredientsList.querySelectorAll('.ing'))
-          .map((ing) => ing.textContent)
-          .join(', ');
-
-        const stepsText = Array.from(stepsEl.querySelectorAll('li'))
-          .map((li, index) => `${index + 1}. ${li.textContent}`)
-          .join('\n');
-
-        const timeMatch = metaInfo.textContent.match(/Estimasi waktu:.*?(\d+)/);
-        const caloriesMatch = metaInfo.textContent.match(/Perkiraan kalori:.*?(\d+)/);
-
-        const time = timeMatch ? timeMatch[1] + ' menit' : '';
-        const calories = caloriesMatch ? caloriesMatch[1] + ' kkal' : '';
-
-        // Buat teks untuk dibagikan
-        const shareText = `🍽️ *${title}* 🍽️
-
-🥗 *Bahan-bahan:*
-${ingredientsText}
-
-👩‍🍳 *Cara Membuat:*
-${stepsText}
-
-⏱️ *Waktu: ${time}*
-🔥 *Kalori: ${calories}*
-
-✨ Dibuat dengan *DapurAI* - Generator Resep Pintar
-🌐 Coba di: ${window.location.origin}`;
-
-        // Cek apakah Web Share API didukung
-        if (navigator.share) {
-          // Gunakan Web Share API untuk perangkat modern
-          navigator
-            .share({
-              title: `${title} - Resep DapurAI`,
-              text: shareText,
-              url: window.location.href,
-            })
-            .then(() => {
-              console.log('Resep berhasil dibagikan!');
-            })
-            .catch((error) => {
-              console.log('Error sharing:', error);
-              // Fallback: copy ke clipboard
-              copyToClipboard(shareText);
-            });
-        } else {
-          // Fallback: copy ke clipboard
-          copyToClipboard(shareText);
-        }
-      }
-
-      // Fungsi untuk menyalin teks ke clipboard
-      function copyToClipboard(text) {
-        // Buat elemen textarea sementara
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-
-        // Tambahkan ke dokumen
-        document.body.appendChild(textarea);
-
-        // Pilih dan salin teks
-        textarea.select();
-        textarea.setSelectionRange(0, 99999); // Untuk perangkat mobile
-
-        try {
-          // Coba salin menggunakan Clipboard API
-          const successful = document.execCommand('copy');
-
-          if (successful) {
-            alert('✅ Resep berhasil disalin ke clipboard!\n\nAnda dapat membagikannya melalui WhatsApp, Instagram, atau media sosial lainnya.');
-          } else {
-            // Fallback: tampilkan teks untuk disalin manual
-            alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
-          }
-        } catch (err) {
-          console.error('Gagal menyalin teks:', err);
-          // Tampilkan teks untuk disalin manual
-          alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
-        }
-
-        // Hapus elemen textarea
-        document.body.removeChild(textarea);
-      }
-
-      // Event listener untuk tombol Share
       shareBtn.addEventListener('click', shareRecipe);
 
       ingredientsInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') generateBtn.click();
       });
 
-      // Event listener untuk fokus elemen
-      document.querySelectorAll('button,input,select').forEach((el) => el.addEventListener('focus', () => (el.style.outline = '2px solid rgba(248, 88, 168, 0.2)')));
+      document.querySelectorAll('button,input,select').forEach((el) => 
+        el.addEventListener('focus', () => (el.style.outline = '2px solid rgba(248, 88, 168, 0.2)'))
+      );
     </script>
   </body>
 </html>

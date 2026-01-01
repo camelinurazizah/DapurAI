@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>DapurAI — Generator Resep Pintar</title>
     <style>
-      /* Semua kode CSS tetap sama seperti sebelumnya */
       :root {
         --bg: #fff6ed;
         --card: #fff;
@@ -14,9 +13,17 @@
         --accent-dark: #fa559f;
         --muted: #6b6b6b;
         --shadow: 0 6px 18px rgba(23, 23, 23, 0.08);
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        --facebook: #1877F2;
+        --twitter: #000000;
+        --google: #DB4437;
         font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
       }
 
+      /* Mode Gelap */
       [data-theme='dark'] {
         --bg: #1a1a1a;
         --card: #2d2d2d;
@@ -25,6 +32,7 @@
         --accent-dark: #fa559f;
         --muted: #a0a0a0;
         --shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        --twitter: #FFFFFF;
       }
 
       * {
@@ -45,6 +53,602 @@
         color: #f0f0f0;
       }
 
+      /* === LOGIN MODAL STYLES - UPDATED === */
+      .login-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* GANTI: Menghapus gambar dan menggunakan warna solid */
+        background: linear-gradient(135deg, #f9a8d4 0%, #fff6ed 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        padding: 20px;
+      }
+
+      [data-theme='dark'] .login-modal {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      }
+
+      .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px 35px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 420px;
+        text-align: center;
+        position: relative;
+        animation: slideUp 0.4s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme='dark'] .login-container {
+        background: rgba(45, 45, 45, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Logo/Header Styles */
+      .login-logo {
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .login-logo h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #f858a8;
+        margin: 0 0 5px 0;
+        letter-spacing: 0.5px;
+      }
+
+      .login-logo .subtitle {
+        font-size: 14px;
+        color: #6b6b6b;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      [data-theme='dark'] .login-logo h1 {
+        color: #f858a8;
+      }
+
+      [data-theme='dark'] .login-logo .subtitle {
+        color: #a0a0a0;
+      }
+
+      /* Login Header */
+      .login-header {
+        margin-bottom: 30px;
+      }
+
+      .login-header h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 10px 0;
+        letter-spacing: -0.5px;
+      }
+
+      [data-theme='dark'] .login-header h2 {
+        color: #f0f0f0;
+      }
+
+      .login-header p {
+        color: #666;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      [data-theme='dark'] .login-header p {
+        color: #aaa;
+      }
+
+      /* Form Styles */
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .register-form, .forgot-form {
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-group {
+        text-align: left;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      [data-theme='dark'] .form-group label {
+        color: #ccc;
+      }
+
+      /* Input with icon styles */
+      .input-with-icon {
+        position: relative;
+        width: 100%;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        font-size: 16px;
+        background: #f9f9f9;
+        color: #333;
+        transition: all 0.3s ease;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      }
+
+      [data-theme='dark'] .form-group input {
+        border: 2px solid #444;
+        background: rgba(255, 255, 255, 0.05);
+        color: #f0f0f0;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #f858a8;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(248, 88, 168, 0.1);
+      }
+
+      [data-theme='dark'] .form-group input:focus {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .form-group input::placeholder {
+        color: #999;
+        font-size: 15px;
+      }
+
+      [data-theme='dark'] .form-group input::placeholder {
+        color: #777;
+      }
+
+      /* Icon styles */
+      .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .input-icon {
+        color: #aaa;
+      }
+
+      /* Icon khusus untuk Forgot Password form - di sebelah kanan */
+      .input-icon-right {
+        position: absolute;
+        right: 45px; /* Memberi ruang untuk password toggle */
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .input-icon-right {
+        color: #aaa;
+      }
+
+      /* Icon khusus untuk Register form - di sebelah kanan */
+      .register-input-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .register-input-icon {
+        color: #aaa;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition: color 0.3s ease;
+      }
+
+      .password-toggle:hover {
+        color: #f858a8;
+      }
+
+      [data-theme='dark'] .password-toggle {
+        color: #aaa;
+      }
+
+      [data-theme='dark'] .password-toggle:hover {
+        color: #f858a8;
+      }
+
+      /* Khusus untuk input dengan ikon di sebelah kanan */
+      .input-with-right-icon input {
+        padding-right: 40px; /* Memberi ruang untuk ikon di kanan */
+      }
+
+      /* Khusus untuk input username di login form - tanpa ikon */
+      #username {
+        padding-left: 15px !important;
+      }
+
+      /* Khusus untuk input password di login form - tanpa ikon kunci */
+      #password {
+        padding-left: 15px !important;
+      }
+
+      /* Khusus untuk input register tanpa ikon kiri */
+      .register-input-no-left-icon {
+        padding-left: 15px !important;
+        padding-right: 40px; /* Memberi ruang untuk ikon di kanan */
+      }
+
+      /* Checkbox Styles */
+      .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0 25px 0;
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .remember-me input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #f858a8;
+      }
+
+      .remember-me label {
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
+        font-weight: 500;
+        text-transform: none;
+        margin: 0;
+      }
+
+      [data-theme='dark'] .remember-me label {
+        color: #aaa;
+      }
+
+      .forgot-password-link a {
+        color: #f858a8;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+
+      .forgot-password-link a:hover {
+        color: #fa559f;
+        text-decoration: underline;
+      }
+
+      /* Login Button */
+      .login-btn {
+        background: linear-gradient(135deg, #f858a8 0%, #fa559f 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 5px;
+        box-shadow: 0 4px 15px rgba(248, 88, 168, 0.4);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(248, 88, 168, 0.5);
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+      }
+
+      .login-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+      }
+
+      .login-btn:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0, 0);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(20, 20);
+          opacity: 0;
+        }
+      }
+
+      /* Register Link */
+      .register-link {
+        margin: 20px 0 25px 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      [data-theme='dark'] .register-link {
+        color: #aaa;
+      }
+
+      .register-link a {
+        color: #f858a8;
+        text-decoration: none;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Message Styles */
+      .error-message, .success-message, .warning-message, .info-message {
+        font-size: 14px;
+        margin-top: 8px;
+        display: none;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border-left: 4px solid;
+        text-align: left;
+        line-height: 1.4;
+      }
+
+      .error-message {
+        color: var(--error);
+        background: rgba(239, 68, 68, 0.08);
+        border-left-color: var(--error);
+      }
+
+      .success-message {
+        color: var(--success);
+        background: rgba(16, 185, 129, 0.08);
+        border-left-color: var(--success);
+      }
+
+      .warning-message {
+        color: var(--warning);
+        background: rgba(245, 158, 11, 0.08);
+        border-left-color: var(--warning);
+      }
+
+      .info-message {
+        color: var(--info);
+        background: rgba(59, 130, 246, 0.08);
+        border-left-color: var(--info);
+      }
+
+      /* Back to login link */
+      .back-to-login {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 20px;
+        font-size: 14px;
+        width: fit-content;
+      }
+
+      .back-to-login:hover {
+        text-decoration: underline;
+      }
+
+      /* Rest of existing styles remain unchanged */
+      /* User Info Styles */
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(248, 88, 168, 0.1);
+        padding: 8px 15px;
+        border-radius: 20px;
+        margin-left: 10px;
+      }
+
+      .user-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .logout-btn {
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .logout-btn:hover {
+        background: rgba(248, 88, 168, 0.1);
+        color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      /* Logout Confirmation Modal */
+      .logout-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+
+      .logout-modal.active {
+        display: flex;
+      }
+
+      .logout-confirm {
+        background: var(--card);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        max-width: 350px;
+        width: 90%;
+      }
+
+      .logout-confirm h3 {
+        margin: 0 0 15px 0;
+        color: var(--accent);
+      }
+
+      .logout-confirm p {
+        margin: 0 0 25px 0;
+        color: var(--muted);
+      }
+
+      .logout-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+      }
+
+      .cancel-btn {
+        background: var(--muted);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .cancel-btn:hover {
+        background: #5a5a5a;
+        transform: translateY(-1px);
+      }
+
+      .confirm-logout-btn {
+        background: var(--error);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+      }
+
+      .confirm-logout-btn:hover {
+        background: #dc2626;
+        transform: translateY(-1px);
+      }
+
+      /* Main app content - hidden until login */
+      .main-app {
+        display: none;
+      }
+
+      /* Rest of your existing styles remain the same */
       header {
         display: flex;
         align-items: center;
@@ -568,11 +1172,21 @@
         flex-shrink: 0;
       }
 
-      #tentang ul li:nth-child(1)::before { content: '💡'; }
-      #tentang ul li:nth-child(2)::before { content: '⏱️'; }
-      #tentang ul li:nth-child(3)::before { content: '🌱'; }
-      #tentang ul li:nth-child(4)::before { content: '🍲'; }
-      #tentang ul li:nth-child(5)::before { content: '🤖'; }
+      #tentang ul li:nth-child(1)::before {
+        content: '💡';
+      }
+      #tentang ul li:nth-child(2)::before {
+        content: '⏱️';
+      }
+      #tentang ul li:nth-child(3)::before {
+        content: '🌱';
+      }
+      #tentang ul li:nth-child(4)::before {
+        content: '🍲';
+      }
+      #tentang ul li:nth-child(5)::before {
+        content: '🤖';
+      }
 
       #kontak {
         margin-top: 60px;
@@ -620,7 +1234,58 @@
         min-height: 100px;
       }
 
-      /* STYLE UNTUK ULASAN */
+      /* Rating Stars Styles */
+      .rating-container {
+        margin: 10px 0;
+      }
+
+      .rating-title {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .rating-stars {
+        display: flex;
+        gap: 5px;
+        direction: rtl;
+      }
+
+      .rating-stars input {
+        display: none;
+      }
+
+      .rating-stars label {
+        font-size: 28px;
+        color: #ddd;
+        cursor: pointer;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .rating-stars label:hover,
+      .rating-stars label:hover ~ label,
+      .rating-stars input:checked ~ label {
+        color: #ffc107;
+      }
+
+      .rating-stars label.active {
+        color: #ffc107;
+      }
+
+      .rating-value {
+        font-size: 14px;
+        margin-left: 10px;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
       .review-item {
         background: #fffaf0;
         padding: 20px;
@@ -639,8 +1304,14 @@
       .review-header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 10px;
+      }
+
+      .review-user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
       }
 
       .review-name {
@@ -648,18 +1319,37 @@
         color: var(--accent);
       }
 
+      .review-email {
+        font-size: 12px;
+        color: var(--muted);
+        font-style: italic;
+      }
+
       .review-date {
         font-size: 12px;
         color: var(--muted);
       }
 
+      .review-rating {
+        margin: 8px 0;
+      }
+
+      .star-rating {
+        font-size: 18px;
+        color: #ffc107;
+      }
+
       .review-message {
         line-height: 1.6;
         color: #2a2a2a;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px dashed #eee;
       }
 
       [data-theme='dark'] .review-message {
         color: #f0f0f0;
+        border-top: 1px dashed #444;
       }
 
       .no-reviews {
@@ -667,12 +1357,6 @@
         padding: 40px;
         color: var(--muted);
         font-style: italic;
-      }
-
-      .review-rating {
-        margin-top: 8px;
-        font-size: 14px;
-        color: #ff9500;
       }
 
       footer {
@@ -707,7 +1391,10 @@
           padding-left: 20px;
           padding-right: 20px;
         }
-        header, footer {
+        header {
+          padding: 20px;
+        }
+        footer {
           padding: 20px;
         }
       }
@@ -740,7 +1427,10 @@
           padding-left: 16px;
           padding-right: 16px;
         }
-        header, footer {
+        header {
+          padding: 16px;
+        }
+        footer {
           padding: 16px;
         }
         h1 {
@@ -767,6 +1457,58 @@
         #kontak {
           padding: 24px 20px;
         }
+        .user-info {
+          display: none;
+        }
+        /* Responsive Login */
+        .login-container {
+          padding: 30px 25px;
+          max-width: 95%;
+        }
+        
+        .login-logo h1 {
+          font-size: 28px;
+        }
+        
+        .login-header h2 {
+          font-size: 22px;
+        }
+        
+        .remember-forgot {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        
+        .form-group input {
+          padding: 14px 15px 14px 15px;
+          font-size: 15px;
+        }
+        
+        .input-icon {
+          font-size: 16px;
+          left: 12px;
+        }
+        
+        .input-icon-right {
+          font-size: 16px;
+          right: 40px;
+        }
+        
+        .register-input-icon {
+          font-size: 16px;
+          right: 12px;
+        }
+        
+        .password-toggle {
+          font-size: 16px;
+          right: 12px;
+        }
+        
+        .login-btn {
+          padding: 15px;
+          font-size: 15px;
+        }
       }
 
       @media (max-width: 480px) {
@@ -781,8 +1523,44 @@
           padding-left: 12px;
           padding-right: 12px;
         }
-        header, footer {
+        header {
           padding: 12px;
+        }
+        footer {
+          padding: 12px;
+        }
+        .login-container {
+          padding: 25px 20px;
+        }
+        
+        .login-logo h1 {
+          font-size: 26px;
+        }
+        
+        .login-header h2 {
+          font-size: 20px;
+        }
+        
+        .form-group input {
+          padding: 14px 15px 14px 15px;
+        }
+        
+        .input-icon-right {
+          right: 35px;
+        }
+        
+        .register-input-icon {
+          font-size: 14px;
+          right: 10px;
+        }
+        
+        .login-btn {
+          padding: 14px;
+          font-size: 14px;
+        }
+        
+        .rating-stars label {
+          font-size: 24px;
         }
       }
 
@@ -794,167 +1572,894 @@
           width: 280px;
           height: 280px;
         }
+        .rating-stars label {
+          font-size: 22px;
+        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <div class="logo">
-        <img src="logo1.png" alt="Logo DapurAI" />
-        <div class="logo-text">
-          <div class="title">DapurAI</div>
-          <div class="subtitle">Generator Resep Pintar</div>
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+      <div class="login-container">
+        <!-- Logo/Header -->
+        <div class="login-logo">
+          <h1>DAPUR AI</h1>
+          <div class="subtitle">Generator Range Pillar</div>
+        </div>
+        
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm">
+          <div class="login-header">
+            <h2>Login to your account</h2>
+          </div>
+          
+          <div class="form-group">
+            <label for="username">USERNAME OR EMAIL</label>
+            <div class="input-with-icon">
+              <input type="text" id="username" placeholder="Type your username or email" required />
+              <div class="error-message" id="usernameError">Username or email must be filled</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <div class="input-with-icon">
+              <input type="password" id="password" placeholder="Type your password" required />
+              <button type="button" class="password-toggle" id="passwordToggle">
+                <span id="eyeIcon">👁️</span>
+              </button>
+              <div class="error-message" id="passwordError">Password must be filled</div>
+            </div>
+          </div>
+
+          <div class="remember-forgot">
+            <div class="remember-me">
+              <input type="checkbox" id="rememberMe" />
+              <label for="rememberMe">Remember me</label>
+            </div>
+            <div class="forgot-password-link">
+              <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            LOGIN
+          </button>
+
+          <div class="success-message" id="loginSuccess">Login successful! Redirecting...</div>
+          <div class="error-message" id="loginError">Incorrect username or password</div>
+
+          <div class="register-link">
+            Don't have an account? <a href="#" id="switchLink">Register here</a>
+          </div>
+        </form>
+
+        <!-- Register Form -->
+        <form class="register-form" id="registerForm">
+          <a class="back-to-login" id="backToLoginFromRegister">
+            <span>←</span> Back to Login
+          </a>
+          <div class="login-header">
+            <h2>Create New Account</h2>
+            <p>Join the DapurAI community</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <div class="input-with-icon">
+              <!-- Ikon di sebelah kanan -->
+              <input type="text" id="regName" class="register-input-no-left-icon" placeholder="Enter your full name" required />
+              <span class="register-input-icon">👤</span>
+              <div class="error-message" id="regNameError">Full name must be filled</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regUsername">Username</label>
+            <div class="input-with-icon">
+              <!-- Ikon di sebelah kanan -->
+              <input type="text" id="regUsername" class="register-input-no-left-icon" placeholder="Create unique username" required />
+              <span class="register-input-icon">👤</span>
+              <div class="error-message" id="regUsernameError">Username must be filled</div>
+              <div class="warning-message" id="regUsernameWarning">Username already taken</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <div class="input-with-icon">
+              <!-- Ikon di sebelah kanan -->
+              <input type="email" id="regEmail" class="register-input-no-left-icon" placeholder="Enter your email" required />
+              <span class="register-input-icon">📧</span>
+              <div class="error-message" id="regEmailError">Email must be filled</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <div class="input-with-icon">
+              <!-- Tanpa ikon kunci di kiri -->
+              <input type="password" id="regPassword" class="register-input-no-left-icon" placeholder="Create password (min 6 characters)" required />
+              <button type="button" class="password-toggle" id="regPasswordToggle">
+                <span id="regEyeIcon">👁️</span>
+              </button>
+              <div class="error-message" id="regPasswordError">Password must be at least 6 characters</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regConfirmPassword">Confirm Password</label>
+            <div class="input-with-icon">
+              <!-- Tanpa ikon kunci di kiri -->
+              <input type="password" id="regConfirmPassword" class="register-input-no-left-icon" placeholder="Repeat your password" required />
+              <button type="button" class="password-toggle" id="regConfirmPasswordToggle">
+                <span id="regConfirmEyeIcon">👁️</span>
+              </button>
+              <div class="error-message" id="regConfirmPasswordError">Password confirmation doesn't match</div>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            REGISTER
+          </button>
+
+          <div class="success-message" id="registerSuccess">Registration successful! Redirecting...</div>
+          
+          <div class="register-link">
+            Already have an account? <a href="#" id="switchToLoginFromReg">Login here</a>
+          </div>
+        </form>
+
+        <!-- Forgot Password Form -->
+        <form class="forgot-form" id="forgotForm">
+          <a class="back-to-login" id="backToLoginFromForgot">
+            <span>←</span> Back to Login
+          </a>
+          <div class="login-header">
+            <h2>Forgot Password</h2>
+            <p>Enter your email to reset password</p>
+          </div>
+          
+          <div class="form-group">
+            <label for="forgotEmail">Registered Email</label>
+            <div class="input-with-icon">
+              <!-- Ikon email di sebelah kanan -->
+              <input type="email" id="forgotEmail" placeholder="Enter your email" required />
+              <span class="input-icon-right">📧</span>
+              <div class="error-message" id="forgotEmailError">Email must be filled</div>
+              <div class="info-message" id="forgotEmailInfo">Reset password instructions will be sent to your email</div>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">
+            SEND RESET LINK
+          </button>
+
+          <div class="success-message" id="forgotSuccess">Reset password link has been sent to your email!</div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="logout-modal" id="logoutModal">
+      <div class="logout-confirm">
+        <h3>Konfirmasi Logout</h3>
+        <p>Apakah Anda yakin ingin keluar dari akun Anda?</p>
+        <div class="logout-actions">
+          <button class="cancel-btn" id="cancelLogout">Batal</button>
+          <button class="confirm-logout-btn" id="confirmLogout">
+            <span>🚪</span> Ya, Keluar
+          </button>
         </div>
       </div>
+    </div>
 
-      <nav>
-        <a href="#" id="homeLink"><span>🏠</span> Home</a>
+    <!-- Main Application (hidden until login) -->
+    <div class="main-app" id="mainApp">
+      <header>
+        <div class="logo">
+          <img src="logo1.png" alt="Logo DapurAI" />
+          <div class="logo-text">
+            <div class="title">DapurAI</div>
+            <div class="subtitle">Generator Resep Pintar</div>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#" id="homeLink"><span>🏠</span> Home</a>
+          <a href="#generator"><span>✨</span> Generator</a>
+          <a href="#tentang"><span>ℹ️</span> Tentang</a>
+          <a href="#kontak"><span>💬</span> Ulasan</a>
+          
+          <!-- User Info -->
+          <div class="user-info" id="userInfo">
+            <div class="user-avatar" id="userAvatar">U</div>
+            <div class="user-name" id="userName">User</div>
+            <button class="logout-btn" id="logoutBtn" title="Keluar">
+              <span>🚪</span> Keluar
+            </button>
+          </div>
+
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span class="dark-icon">🌙</span>
+            <span class="light-icon">☀️</span>
+          </button>
+        </nav>
+
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </header>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <a href="#" id="homeLinkSidebar"><span>🏠</span> Home</a>
         <a href="#generator"><span>✨</span> Generator</a>
         <a href="#tentang"><span>ℹ️</span> Tentang</a>
         <a href="#kontak"><span>💬</span> Ulasan</a>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <span class="dark-icon">🌙</span>
-          <span class="light-icon">☀️</span>
+        
+        <!-- User Info in Sidebar -->
+        <div class="user-info" style="margin: 10px 0; background: none; padding: 10px 0;">
+          <div class="user-avatar" id="userAvatarSidebar">U</div>
+          <div class="user-name" id="userNameSidebar">User</div>
+        </div>
+        
+        <button class="logout-btn" id="logoutBtnSidebar" style="justify-content: flex-start; padding: 12px; margin-top: 10px;">
+          <span>🚪</span> Keluar dari Akun
         </button>
-      </nav>
 
-      <!-- Hamburger Menu -->
-      <div class="hamburger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <button class="theme-toggle" id="themeToggleSidebar" aria-label="Toggle theme" style="justify-content: flex-start; padding: 12px;">
+          <span class="dark-icon">🌙 Mode Gelap</span>
+          <span class="light-icon">☀️ Mode Terang</span>
+        </button>
       </div>
-    </header>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <a href="#" id="homeLinkSidebar"><span>🏠</span> Home</a>
-      <a href="#generator"><span>✨</span> Generator</a>
-      <a href="#tentang"><span>ℹ️</span> Tentang</a>
-      <a href="#kontak"><span>💬</span> Ulasan</a>
-      <button class="theme-toggle" id="themeToggleSidebar" aria-label="Toggle theme">
-        <span class="dark-icon">🌙 Mode Gelap</span>
-        <span class="light-icon">☀️ Mode Terang</span>
-      </button>
+      <!-- Overlay -->
+      <div class="overlay"></div>
+
+      <main class="container">
+        <section class="hero">
+          <div class="hero-left">
+            <h1>Temukan Resep Pintar<br />Dari Bahan di Dapurmu!</h1>
+            <p class="lead">Masukkan bahan yang kamu punya — AI kami akan menyusun resep yang praktis, hemat, dan lezat.</p>
+
+            <div class="search-card" id="generator">
+              <input id="ingredients" type="text" placeholder="telur, nasi, ayam..." value="telur, nasi, kecap" />
+              <select id="cuisine" aria-label="jenis masakan">
+                <option value="indonesia">Masakan Sehat</option>
+                <option value="asia">Masakan Bayi</option>
+                <option value="western">Masakan Berat</option>
+              </select>
+              <button class="primary" id="generateBtn"><span>✨</span> Generate</button>
+            </div>
+
+            <a class="cta" href="#result" id="tryBtn"><span>🚀</span> Coba Generator AI Sekarang →</a>
+
+            <div class="features">
+              <div class="feature">
+                <div class="feature-icon">🥗</div>
+                <strong>Masakan Sehat</strong>
+                <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Resep rendah lemak dan bergizi tinggi untuk menjaga pola makan seimbang.</div>
+              </div>
+              <div class="feature">
+                <div class="feature-icon">👶</div>
+                <strong>Masakan Bayi</strong>
+                <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Inspirasi makanan lembut dan bernutrisi tinggi untuk bayi usia 6 bulan ke atas.</div>
+              </div>
+              <div class="feature">
+                <div class="feature-icon">🍛</div>
+                <strong>Masakan Berat</strong>
+                <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Pilihan menu utama yang mengenyangkan seperti nasi goreng dan ayam bakar.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right">
+            <div class="illustr" aria-hidden>
+              <img src="dapurku.png" alt="Ilustrasi dapur AI" />
+            </div>
+          </div>
+        </section>
+
+        <section class="result" id="result">
+          <h3 id="recipeTitle">Hasil resep akan muncul di sini</h3>
+          <div class="meta" id="metaInfo">Masukkan bahan lalu klik <strong>Generate</strong>.</div>
+          <div class="ing-list" id="ingredientsList"></div>
+          <div style="margin-top: 12px" id="steps"></div>
+          <div class="controls">
+            <button class="small" id="shareBtn"><span>📤</span> Share</button>
+            <button class="small" id="clearBtn"><span>🧹</span> Bersihkan</button>
+          </div>
+        </section>
+
+        <section id="tentang">
+          <h2>Tentang DapurAI</h2>
+          <p>
+            <strong>DapurAI</strong> adalah aplikasi website berbasis kecerdasan buatan (AI) yang membantu pengguna menemukan ide resep masakan dari bahan-bahan yang tersedia di dapur. Aplikasi ini
+            dirancang untuk memberikan solusi cepat bagi siapa saja yang bingung ingin masak apa hari ini tanpa perlu membeli bahan tambahan.
+          </p>
+          <p>
+            DapurAI hadir dengan teknologi cerdas yang dapat mengenali bahan-bahan sederhana seperti telur, nasi, ayam, atau sayur, dan secara otomatis menghasilkan resep yang praktis, lezat, serta
+            sesuai selera. Dengan tampilan yang sederhana dan interaktif, pengguna cukup mengetik bahan yang ada, lalu DapurAI akan menampilkan resep yang dapat langsung dicoba di rumah.
+          </p>
+          <p>
+            Tujuan utama dari DapurAI adalah untuk menghemat waktu memasak, mengurangi pemborosan bahan makanan, dan membantu masyarakat mengatur pola makan yang lebih sehat. Dengan memanfaatkan AI,
+            aplikasi ini tidak hanya memberikan resep, tetapi juga memberikan inspirasi baru setiap hari agar memasak menjadi kegiatan yang menyenangkan.
+          </p>
+          <p>Selain itu, DapurAI juga bermanfaat bagi para pelajar, mahasiswa, dan ibu rumah tangga yang ingin berhemat namun tetap dapat menyajikan makanan bergizi.</p>
+
+          <p><strong>Manfaat DapurAI:</strong></p>
+          <ul>
+            <li>Memberi inspirasi resep dari bahan sederhana</li>
+            <li>Menghemat waktu dalam menentukan menu harian</li>
+            <li>Membantu mengurangi food waste</li>
+            <li>Mendorong gaya hidup sehat dengan resep seimbang</li>
+            <li>Mengintegrasikan teknologi AI dalam dunia kuliner</li>
+          </ul>
+        </section>
+
+        <section id="kontak">
+          <h2>📞 Ulasan Pengguna</h2>
+          <p>Berikan rating dan ulasan pengalamanmu setelah menggunakan DapurAI 👇</p>
+
+          <form id="reviewForm">
+            <input type="hidden" id="userEmail" />
+            <input type="text" id="nama" placeholder="Nama Anda" required />
+            
+            <div class="rating-container">
+              <div class="rating-title">
+                <span>⭐</span> Rating:
+                <span class="rating-value" id="ratingValue">0/5</span>
+              </div>
+              <div class="rating-stars">
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label for="star5" title="5 stars">★</label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label for="star4" title="4 stars">★</label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label for="star3" title="3 stars">★</label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label for="star2" title="2 stars">★</label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label for="star1" title="1 star">★</label>
+              </div>
+            </div>
+            
+            <textarea id="pesan" rows="3" placeholder="Tulis ulasan Anda..." required></textarea>
+            <button type="submit" class="primary"><span>📨</span> Kirim Ulasan</button>
+          </form>
+
+          <h3 style="margin-top: 30px">🧡 Ulasan Terbaru</h3>
+          <div id="reviewList"></div>
+        </section>
+      </main>
+
+      <footer>©2025 DapurAI — Camelia Nurazizah — Generator Resep Pintar</footer>
     </div>
 
-    <!-- Overlay -->
-    <div class="overlay"></div>
-
-    <main class="container">
-      <section class="hero">
-        <div class="hero-left">
-          <h1>Temukan Resep Pintar<br />Dari Bahan di Dapurmu!</h1>
-          <p class="lead">Masukkan bahan yang kamu punya — AI kami akan menyusun resep yang praktis, hemat, dan lezat.</p>
-
-          <div class="search-card" id="generator">
-            <input id="ingredients" type="text" placeholder="telur, nasi, ayam..." value="telur, nasi, kecap" />
-            <select id="cuisine" aria-label="jenis masakan">
-              <option value="indonesia">Masakan Sehat</option>
-              <option value="asia">Masakan Bayi</option>
-              <option value="western">Masakan Berat</option>
-            </select>
-            <button class="primary" id="generateBtn"><span>✨</span> Generate</button>
-          </div>
-
-          <a class="cta" href="#result" id="tryBtn"><span>🚀</span> Coba Generator AI Sekarang →</a>
-
-          <div class="features">
-            <div class="feature">
-              <div class="feature-icon">🥗</div>
-              <strong>Masakan Sehat</strong>
-              <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Resep rendah lemak dan bergizi tinggi untuk menjaga pola makan seimbang.</div>
-            </div>
-            <div class="feature">
-              <div class="feature-icon">👶</div>
-              <strong>Masakan Bayi</strong>
-              <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Inspirasi makanan lembut dan bernutrisi tinggi untuk bayi usia 6 bulan ke atas.</div>
-            </div>
-            <div class="feature">
-              <div class="feature-icon">🍛</div>
-              <strong>Masakan Berat</strong>
-              <div style="color: var(--muted); font-size: 13px; margin-top: 6px">Pilihan menu utama yang mengenyangkan seperti nasi goreng dan ayam bakar.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-right">
-          <div class="illustr" aria-hidden>
-            <img src="dapurku.png" alt="Ilustrasi dapur AI" />
-          </div>
-        </div>
-      </section>
-
-      <section class="result" id="result">
-        <h3 id="recipeTitle">Hasil resep akan muncul di sini</h3>
-        <div class="meta" id="metaInfo">Masukkan bahan lalu klik <strong>Generate</strong>.</div>
-        <div class="ing-list" id="ingredientsList"></div>
-        <div style="margin-top: 12px" id="steps"></div>
-        <div class="controls">
-          <button class="small" id="shareBtn"><span>📤</span> Share</button>
-          <button class="small" id="clearBtn"><span>🧹</span> Bersihkan</button>
-        </div>
-      </section>
-
-      <!-- === SECTION TENTANG DAPURAI === -->
-      <section id="tentang">
-        <h2>Tentang DapurAI</h2>
-        <p>
-          <strong>DapurAI</strong> adalah aplikasi website berbasis kecerdasan buatan (AI) yang membantu pengguna menemukan ide resep masakan dari bahan-bahan yang tersedia di dapur. Aplikasi ini
-          dirancang untuk memberikan solusi cepat bagi siapa saja yang bingung ingin masak apa hari ini tanpa perlu membeli bahan tambahan.
-        </p>
-        <p>
-          DapurAI hadir dengan teknologi cerdas yang dapat mengenali bahan-bahan sederhana seperti telur, nasi, ayam, atau sayur, dan secara otomatis menghasilkan resep yang praktis, lezat, serta
-          sesuai selera. Dengan tampilan yang sederhana dan interaktif, pengguna cukup mengetik bahan yang ada, lalu DapurAI akan menampilkan resep yang dapat langsung dicoba di rumah.
-        </p>
-        <p>
-          Tujuan utama dari DapurAI adalah untuk menghemat waktu memasak, mengurangi pemborosan bahan makanan, dan membantu masyarakat mengatur pola makan yang lebih sehat. Dengan memanfaatkan AI,
-          aplikasi ini tidak hanya memberikan resep, tetapi juga memberikan inspirasi baru setiap hari agar memasak menjadi kegiatan yang menyenangkan.
-        </p>
-        <p>Selain itu, DapurAI juga bermanfaat bagi para pelajar, mahasiswa, dan ibu rumah tangga yang ingin berhemat namun tetap dapat menyajikan makanan bergizi.</p>
-
-        <p><strong>Manfaat DapurAI:</strong></p>
-        <ul>
-          <li>Memberi inspirasi resep dari bahan sederhana</li>
-          <li>Menghemat waktu dalam menentukan menu harian</li>
-          <li>Membantu mengurangi food waste</li>
-          <li>Mendorong gaya hidup sehat dengan resep seimbang</li>
-          <li>Mengintegrasikan teknologi AI dalam dunia kuliner</li>
-        </ul>
-      </section>
-
-      <section id="kontak">
-        <h2>📞 Ulasan Pengguna</h2>
-        <p>Kirimkan saran dan pengalamanmu setelah menggunakan DapurAI 😊</p>
-
-        <form id="reviewForm">
-          <input type="text" id="nama" placeholder="Nama Anda" required />
-          <textarea id="pesan" rows="3" placeholder="Tulis ulasan Anda..." required></textarea>
-          <div style="margin-bottom: 10px;">
-            <label style="color: var(--muted); font-size: 14px; display: block; margin-bottom: 5px;">Rating:</label>
-            <div style="display: flex; gap: 5px;">
-              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="1">☆</span>
-              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="2">☆</span>
-              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="3">☆</span>
-              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="4">☆</span>
-              <span style="cursor: pointer; font-size: 24px;" class="star" data-value="5">☆</span>
-            </div>
-            <input type="hidden" id="rating" value="0">
-          </div>
-          <button type="submit" class="primary"><span>📨</span> Kirim Ulasan</button>
-        </form>
-
-        <h3 style="margin-top: 30px">🧡 Ulasan Terbaru</h3>
-        <div id="reviewList"></div>
-      </section>
-    </main>
-
-    <footer>©2025 DapurAI — Camelia Nurazizah — Generator Resep Pintar</footer>
-
     <script>
-      // ============================================
-      // VARIABEL UTAMA
-      // ============================================
+      // ===== USER MANAGEMENT SYSTEM =====
+      const loginModal = document.getElementById('loginModal');
+      const mainApp = document.getElementById('mainApp');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const forgotForm = document.getElementById('forgotForm');
+      const switchLink = document.getElementById('switchLink');
+      const switchToLoginFromReg = document.getElementById('switchToLoginFromReg');
+      
+      // Login form elements
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const rememberMeCheckbox = document.getElementById('rememberMe');
+      const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+      const usernameError = document.getElementById('usernameError');
+      const passwordError = document.getElementById('passwordError');
+      const loginSuccess = document.getElementById('loginSuccess');
+      const loginError = document.getElementById('loginError');
+      const passwordToggle = document.getElementById('passwordToggle');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      // Register form elements
+      const regNameInput = document.getElementById('regName');
+      const regUsernameInput = document.getElementById('regUsername');
+      const regEmailInput = document.getElementById('regEmail');
+      const regPasswordInput = document.getElementById('regPassword');
+      const regConfirmPasswordInput = document.getElementById('regConfirmPassword');
+      const backToLoginFromRegister = document.getElementById('backToLoginFromRegister');
+      const regNameError = document.getElementById('regNameError');
+      const regUsernameError = document.getElementById('regUsernameError');
+      const regEmailError = document.getElementById('regEmailError');
+      const regUsernameWarning = document.getElementById('regUsernameWarning');
+      const regPasswordError = document.getElementById('regPasswordError');
+      const regConfirmPasswordError = document.getElementById('regConfirmPasswordError');
+      const registerSuccess = document.getElementById('registerSuccess');
+      const regPasswordToggle = document.getElementById('regPasswordToggle');
+      const regConfirmPasswordToggle = document.getElementById('regConfirmPasswordToggle');
+      const regEyeIcon = document.getElementById('regEyeIcon');
+      const regConfirmEyeIcon = document.getElementById('regConfirmEyeIcon');
+      
+      // Forgot password elements
+      const forgotEmailInput = document.getElementById('forgotEmail');
+      const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
+      const forgotEmailError = document.getElementById('forgotEmailError');
+      const forgotEmailInfo = document.getElementById('forgotEmailInfo');
+      const forgotSuccess = document.getElementById('forgotSuccess');
+      
+      // Logout elements
+      const logoutModal = document.getElementById('logoutModal');
+      const cancelLogout = document.getElementById('cancelLogout');
+      const confirmLogout = document.getElementById('confirmLogout');
+
+      // User info elements
+      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutBtnSidebar = document.getElementById('logoutBtnSidebar');
+      const userInfo = document.getElementById('userInfo');
+      const userName = document.getElementById('userName');
+      const userAvatar = document.getElementById('userAvatar');
+      const userNameSidebar = document.getElementById('userNameSidebar');
+      const userAvatarSidebar = document.getElementById('userAvatarSidebar');
+
+      // Demo credentials and user storage
+      let users = JSON.parse(localStorage.getItem('dapurai_users') || '[]');
+      
+      // Initialize with demo users if none exist
+      if (users.length === 0) {
+        users = [
+          { 
+            id: 1, 
+            username: 'user', 
+            password: '123', 
+            name: 'User Demo',
+            email: 'user@demo.com',
+            createdAt: new Date().toISOString()
+          },
+          { 
+            id: 2, 
+            username: 'chef', 
+            password: 'masak', 
+            name: 'Chef Professional',
+            email: 'chef@dapurai.com',
+            createdAt: new Date().toISOString()
+          },
+          { 
+            id: 3, 
+            username: 'admin', 
+            password: 'admin123', 
+            name: 'Administrator',
+            email: 'admin@dapurai.com',
+            createdAt: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem('dapurai_users', JSON.stringify(users));
+      }
+
+      // Function to show notification
+      function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: ${type === 'success' ? 'var(--success)' : 
+                      type === 'error' ? 'var(--error)' : 
+                      type === 'warning' ? 'var(--warning)' : 'var(--accent)'};
+          color: white;
+          padding: 15px 20px;
+          border-radius: 10px;
+          box-shadow: var(--shadow);
+          z-index: 1001;
+          animation: slideInRight 0.3s ease;
+          font-weight: 600;
+          max-width: 300px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        `;
+        
+        notification.innerHTML = `
+          <span style="font-size: 20px;">${type === 'success' ? '✅' : 
+                            type === 'error' ? '❌' : 
+                            type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+          notification.style.animation = 'slideOutRight 0.3s ease';
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // Function to toggle password visibility
+      function togglePasswordVisibility(inputId, eyeIconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(eyeIconId);
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeIcon.textContent = '👁️‍🗨️'; // Open eye
+        } else {
+          passwordInput.type = 'password';
+          eyeIcon.textContent = '👁️'; // Closed eye
+        }
+      }
+
+      // Initialize password toggles
+      passwordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('password', 'eyeIcon');
+      });
+
+      regPasswordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('regPassword', 'regEyeIcon');
+      });
+
+      regConfirmPasswordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('regConfirmPassword', 'regConfirmEyeIcon');
+      });
+
+      // Function to show login form
+      function showLoginForm() {
+        loginForm.style.display = 'flex';
+        registerForm.style.display = 'none';
+        forgotForm.style.display = 'none';
+        resetErrorMessages();
+      }
+
+      // Function to show register form
+      function showRegisterForm() {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'flex';
+        forgotForm.style.display = 'none';
+        resetErrorMessages();
+      }
+
+      // Function to show forgot password form
+      function showForgotForm() {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+        forgotForm.style.display = 'flex';
+        resetErrorMessages();
+      }
+
+      // Reset all error messages
+      function resetErrorMessages() {
+        // Login errors
+        usernameError.style.display = 'none';
+        passwordError.style.display = 'none';
+        loginSuccess.style.display = 'none';
+        loginError.style.display = 'none';
+        
+        // Register errors
+        regNameError.style.display = 'none';
+        regUsernameError.style.display = 'none';
+        regEmailError.style.display = 'none';
+        regUsernameWarning.style.display = 'none';
+        regPasswordError.style.display = 'none';
+        regConfirmPasswordError.style.display = 'none';
+        registerSuccess.style.display = 'none';
+        
+        // Forgot password errors
+        forgotEmailError.style.display = 'none';
+        forgotEmailInfo.style.display = 'none';
+        forgotSuccess.style.display = 'none';
+      }
+
+      // Check if user is already logged in
+      function checkLoginStatus() {
+        const loggedInUser = localStorage.getItem('dapurai_loggedInUser');
+        if (loggedInUser) {
+          showMainApp(JSON.parse(loggedInUser));
+        }
+      }
+
+      // Show main application
+      function showMainApp(user) {
+        loginModal.style.display = 'none';
+        mainApp.style.display = 'block';
+        
+        // Update user info
+        userName.textContent = user.name;
+        userNameSidebar.textContent = user.name;
+        userAvatar.textContent = user.avatar || user.name.charAt(0).toUpperCase();
+        userAvatarSidebar.textContent = user.avatar || user.name.charAt(0).toUpperCase();
+        
+        // Set email in form
+        document.getElementById('userEmail').value = user.email || '';
+        document.getElementById('nama').value = user.name;
+        
+        // Apply saved theme
+        initializeTheme();
+
+        // Show welcome message
+        showNotification(`Selamat datang, ${user.name}!`, 'success');
+      }
+
+      // Handle login form submission
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const rememberMe = rememberMeCheckbox.checked;
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate username
+        if (!username) {
+          usernameError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password) {
+          passwordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Check credentials
+        const user = users.find(u => u.username === username && u.password === password);
+        
+        if (user) {
+          // Login successful
+          loginSuccess.style.display = 'block';
+          
+          // Save login status
+          localStorage.setItem('dapurai_loggedInUser', JSON.stringify(user));
+          
+          // Save remember me preference
+          if (rememberMe) {
+            localStorage.setItem('dapurai_rememberMe', 'true');
+            localStorage.setItem('dapurai_lastUsername', username);
+          } else {
+            localStorage.removeItem('dapurai_rememberMe');
+            localStorage.removeItem('dapurai_lastUsername');
+          }
+          
+          // Show main app after delay
+          setTimeout(() => {
+            showMainApp(user);
+          }, 1000);
+        } else {
+          // Login failed
+          loginError.style.display = 'block';
+        }
+      });
+
+      // Handle register form submission
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = regNameInput.value.trim();
+        const username = regUsernameInput.value.trim();
+        const email = regEmailInput.value.trim();
+        const password = regPasswordInput.value.trim();
+        const confirmPassword = regConfirmPasswordInput.value.trim();
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate name
+        if (!name) {
+          regNameError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate username
+        if (!username) {
+          regUsernameError.style.display = 'block';
+          isValid = false;
+        } else if (users.find(u => u.username === username)) {
+          regUsernameWarning.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate email
+        if (!email) {
+          regEmailError.style.display = 'block';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          regEmailError.textContent = 'Email tidak valid';
+          regEmailError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password || password.length < 6) {
+          regPasswordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate confirm password
+        if (password !== confirmPassword) {
+          regConfirmPasswordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Create new user
+        const newUser = {
+          id: Date.now(),
+          username: username,
+          password: password,
+          name: name,
+          email: email,
+          createdAt: new Date().toISOString()
+        };
+        
+        // Add user to storage
+        users.push(newUser);
+        localStorage.setItem('dapurai_users', JSON.stringify(users));
+        
+        // Show success message
+        registerSuccess.style.display = 'block';
+        
+        // Auto login after registration
+        setTimeout(() => {
+          localStorage.setItem('dapurai_loggedInUser', JSON.stringify(newUser));
+          showMainApp(newUser);
+        }, 1500);
+      });
+
+      // Handle forgot password form submission
+      forgotForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = forgotEmailInput.value.trim();
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate email
+        if (!email) {
+          forgotEmailError.style.display = 'block';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          forgotEmailError.textContent = 'Email tidak valid';
+          forgotEmailError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Check if email exists
+        const user = users.find(u => u.email === email);
+        
+        if (user) {
+          // Show success message
+          forgotEmailInfo.style.display = 'block';
+          forgotSuccess.style.display = 'block';
+          
+          // Simulate sending reset email
+          setTimeout(() => {
+            showLoginForm();
+            showNotification(`Link reset password telah dikirim ke ${email}. Untuk demo, password telah direset ke "password123".`, 'info');
+            
+            // Reset password for demo (in real app, this would be handled by email verification)
+            user.password = 'password123';
+            localStorage.setItem('dapurai_users', JSON.stringify(users));
+          }, 1000);
+        } else {
+          forgotEmailError.textContent = 'Email tidak terdaftar';
+          forgotEmailError.style.display = 'block';
+        }
+      });
+
+      // Handle form switching
+      switchLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRegisterForm();
+      });
+
+      // Handle switch from register to login
+      switchToLoginFromReg.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      // Forgot password link
+      forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showForgotForm();
+      });
+
+      // Back to login links
+      backToLoginFromRegister.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      backToLoginFromForgot.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      // Show logout confirmation modal
+      function showLogoutConfirmation() {
+        logoutModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      // Hide logout confirmation modal
+      function hideLogoutConfirmation() {
+        logoutModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // Handle logout
+      function handleLogout() {
+        const currentUser = JSON.parse(localStorage.getItem('dapurai_loggedInUser') || '{}');
+        
+        // Remove login status
+        localStorage.removeItem('dapurai_loggedInUser');
+        
+        // Hide main app and show login modal
+        mainApp.style.display = 'none';
+        loginModal.style.display = 'flex';
+        
+        // Reset forms and switch to login
+        showLoginForm();
+        loginForm.reset();
+        registerForm.reset();
+        forgotForm.reset();
+        resetErrorMessages();
+        
+        // Reset password fields to hidden
+        passwordInput.type = 'password';
+        eyeIcon.textContent = '👁️';
+        regPasswordInput.type = 'password';
+        regEyeIcon.textContent = '👁️';
+        regConfirmPasswordInput.type = 'password';
+        regConfirmEyeIcon.textContent = '👁️';
+        
+        // Hide logout modal
+        hideLogoutConfirmation();
+        
+        // Close sidebar if open
+        if (sidebar.classList.contains('active')) {
+          toggleSidebar();
+        }
+        
+        // Show logout notification
+        showNotification(`Sampai jumpa, ${currentUser.name || 'User'}!`, 'info');
+      }
+
+      // Event listeners for logout buttons
+      logoutBtn.addEventListener('click', showLogoutConfirmation);
+      logoutBtnSidebar.addEventListener('click', showLogoutConfirmation);
+
+      // Event listeners for logout modal
+      cancelLogout.addEventListener('click', hideLogoutConfirmation);
+      confirmLogout.addEventListener('click', handleLogout);
+
+      // Close logout modal when clicking outside
+      logoutModal.addEventListener('click', function(e) {
+        if (e.target === logoutModal) {
+          hideLogoutConfirmation();
+        }
+      });
+
+      // ===== EXISTING APPLICATION CODE =====
       const generateBtn = document.getElementById('generateBtn');
       const tryBtn = document.getElementById('tryBtn');
       const ingredientsInput = document.getElementById('ingredients');
@@ -966,83 +2471,113 @@
       const clearBtn = document.getElementById('clearBtn');
       const reviewForm = document.getElementById('reviewForm');
       const reviewList = document.getElementById('reviewList');
+      const ratingValue = document.getElementById('ratingValue');
+      
       const homeLink = document.getElementById('homeLink');
       const homeLinkSidebar = document.getElementById('homeLinkSidebar');
+
+      // Hamburger menu elements
       const hamburgerMenu = document.querySelector('.hamburger-menu');
       const sidebar = document.querySelector('.sidebar');
       const overlay = document.querySelector('.overlay');
+
+      // Theme toggle elements
       const themeToggle = document.getElementById('themeToggle');
       const themeToggleSidebar = document.getElementById('themeToggleSidebar');
 
-      // ============================================
-      // SISTEM SIMPANAN ULASAN YANG LEBIH BAIK
-      // ============================================
+      // Fungsi untuk toggle theme
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-      // Gunakan localStorage untuk simulasi database sederhana
-      const STORAGE_KEY = 'dapurai_reviews_v2';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('dapurai_theme', newTheme);
+      }
+
+      // Fungsi untuk mengatur tema awal
+      function initializeTheme() {
+        const savedTheme = localStorage.getItem('dapurai_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      // Event listener untuk toggle theme
+      themeToggle.addEventListener('click', toggleTheme);
+      themeToggleSidebar.addEventListener('click', toggleTheme);
+
+      // Fungsi untuk toggle sidebar
+      function toggleSidebar() {
+        hamburgerMenu.classList.toggle('active');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+      }
+
+      // Event listener untuk hamburger menu
+      hamburgerMenu.addEventListener('click', toggleSidebar);
+
+      // Event listener untuk overlay
+      overlay.addEventListener('click', toggleSidebar);
+
+      // Event listener untuk link di sidebar
+      sidebar.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          toggleSidebar();
+        });
+      });
+
+      // Fungsi untuk scroll ke home
+      function scrollToHome() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+
+      // Event listener untuk home links
+      homeLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToHome();
+      });
+
+      homeLinkSidebar.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToHome();
+        toggleSidebar();
+      });
+
+      // Rating stars interaction
+      const ratingStars = document.querySelectorAll('.rating-stars input');
+      ratingStars.forEach(star => {
+        star.addEventListener('change', function() {
+          ratingValue.textContent = `${this.value}/5`;
+        });
+      });
+
+      // Fungsi untuk membuat bintang rating
+      function createStarRating(rating) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= rating) {
+            stars += '★';
+          } else {
+            stars += '☆';
+          }
+        }
+        return `<span class="star-rating">${stars}</span>`;
+      }
 
       // Fungsi untuk memuat ulasan dari localStorage
       function loadReviews() {
         try {
-          const reviewsJson = localStorage.getItem(STORAGE_KEY);
-          if (!reviewsJson) {
-            // Jika tidak ada data, buat data awal
-            const initialReviews = [
-              {
-                id: 1,
-                name: 'Sari Budianto',
-                message: 'DapurAI sangat membantu saya sebagai ibu rumah tangga yang sering bingung mau masak apa. Fitur generator resepnya sangat praktis!',
-                date: '2024-03-20T10:30:00.000Z',
-                rating: 5
-              },
-              {
-                id: 2,
-                name: 'Andi Pratama',
-                message: 'Sebagai mahasiswa yang tinggal kos, aplikasi ini sangat berguna untuk memanfaatkan bahan makanan yang ada. Resepnya simpel dan mudah diikuti!',
-                date: '2024-03-19T14:20:00.000Z',
-                rating: 4
-              },
-              {
-                id: 3,
-                name: 'Dewi Lestari',
-                message: 'Saya suka fitur masakan sehatnya. Sudah coba beberapa resep dan hasilnya enak! Anak-anak juga suka. Terima kasih DapurAI!',
-                date: '2024-03-18T09:15:00.000Z',
-                rating: 5
-              },
-              {
-                id: 4,
-                name: 'Budi Santoso',
-                message: 'Baru pertama kali mencoba DapurAI dan langsung menemukan resep yang pas untuk makan malam. Prosesnya cepat dan hasilnya lezat!',
-                date: '2024-03-17T18:45:00.000Z',
-                rating: 4
-              },
-              {
-                id: 5,
-                name: 'Maya Indah',
-                message: 'Sangat membantu saat bingung mau masak apa dari bahan seadanya. Sekarang tidak perlu lagi membuang bahan makanan yang tersisa!',
-                date: '2024-03-16T12:10:00.000Z',
-                rating: 5
-              }
-            ];
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(initialReviews));
-            return initialReviews;
-          }
-          return JSON.parse(reviewsJson);
+          return JSON.parse(localStorage.getItem('dapurai_reviews') || '[]');
         } catch (e) {
-          console.error('Error loading reviews:', e);
           return [];
         }
       }
 
       // Fungsi untuk menyimpan ulasan ke localStorage
       function saveReviews(reviews) {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-          return true;
-        } catch (e) {
-          console.error('Error saving reviews:', e);
-          return false;
-        }
+        localStorage.setItem('dapurai_reviews', JSON.stringify(reviews));
       }
 
       // Fungsi untuk menampilkan ulasan
@@ -1055,41 +2590,29 @@
           return;
         }
 
-        // Urutkan ulasan dari yang terbaru (tanggal terbaru di atas)
+        // Urutkan ulasan dari yang terbaru
         reviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // Tampilkan semua ulasan
         reviews.forEach((review) => {
           const reviewItem = document.createElement('div');
           reviewItem.className = 'review-item';
 
-          // Format tanggal
-          const date = new Date(review.date);
-          const formattedDate = date.toLocaleDateString('id-ID', {
+          const date = new Date(review.date).toLocaleDateString('id-ID', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
           });
-
-          // Buat bintang rating
-          let starsHtml = '';
-          for (let i = 1; i <= 5; i++) {
-            if (i <= review.rating) {
-              starsHtml += '★';
-            } else {
-              starsHtml += '☆';
-            }
-          }
 
           reviewItem.innerHTML = `
             <div class="review-header">
-              <div class="review-name">${review.name}</div>
-              <div class="review-date">${formattedDate}</div>
+              <div class="review-user-info">
+                <div class="review-name">${review.name}</div>
+                <div class="review-email">${review.email}</div>
+              </div>
+              <div class="review-date">${date}</div>
             </div>
-            <div class="review-rating" style="color: #ff9500; font-size: 18px; margin-bottom: 8px;">
-              ${starsHtml}
+            <div class="review-rating">
+              ${createStarRating(review.rating || 0)}
             </div>
             <div class="review-message">${review.message}</div>
           `;
@@ -1098,154 +2621,46 @@
         });
       }
 
-      // Fungsi untuk sistem rating bintang
-      function setupStarRating() {
-        const stars = document.querySelectorAll('.star');
-        const ratingInput = document.getElementById('rating');
-        
-        stars.forEach(star => {
-          star.addEventListener('click', function() {
-            const value = parseInt(this.getAttribute('data-value'));
-            ratingInput.value = value;
-            
-            // Update tampilan bintang
-            stars.forEach((s, index) => {
-              if (index < value) {
-                s.textContent = '★';
-                s.style.color = '#ff9500';
-              } else {
-                s.textContent = '☆';
-                s.style.color = '#ccc';
-              }
-            });
-          });
-          
-          star.addEventListener('mouseover', function() {
-            const value = parseInt(this.getAttribute('data-value'));
-            
-            stars.forEach((s, index) => {
-              if (index < value) {
-                s.style.color = '#ff9500';
-              } else {
-                s.style.color = '#ccc';
-              }
-            });
-          });
-          
-          star.addEventListener('mouseout', function() {
-            const currentRating = parseInt(ratingInput.value);
-            
-            stars.forEach((s, index) => {
-              if (index < currentRating) {
-                s.style.color = '#ff9500';
-              } else {
-                s.style.color = '#ccc';
-              }
-            });
-          });
-        });
-      }
-
       // Fungsi untuk menangani pengiriman ulasan
       function handleReviewSubmit(e) {
         e.preventDefault();
 
-        const name = document.getElementById('nama').value.trim();
-        const message = document.getElementById('pesan').value.trim();
-        const rating = parseInt(document.getElementById('rating').value) || 0;
+        const name = document.getElementById('nama').value;
+        const email = document.getElementById('userEmail').value || 'user@example.com';
+        const message = document.getElementById('pesan').value;
+        const rating = document.querySelector('input[name="rating"]:checked')?.value || 0;
 
-        // Validasi input
-        if (!name) {
-          alert('Harap masukkan nama Anda!');
-          document.getElementById('nama').focus();
+        if (!rating || rating == 0) {
+          showNotification('Silakan berikan rating dengan memilih bintang terlebih dahulu!', 'warning');
           return;
         }
 
-        if (!message) {
-          alert('Harap tulis ulasan Anda!');
-          document.getElementById('pesan').focus();
-          return;
-        }
-
-        if (rating === 0) {
-          alert('Harap berikan rating dengan mengklik bintang!');
-          return;
-        }
-
-        // Buat objek ulasan baru
         const newReview = {
-          id: Date.now(), // ID unik berdasarkan timestamp
-          name: name,
-          message: message,
-          rating: rating,
+          name,
+          email,
+          rating: parseInt(rating),
+          message,
           date: new Date().toISOString(),
         };
 
-        // Ambil ulasan yang ada, tambahkan yang baru, lalu simpan
         const reviews = loadReviews();
         reviews.push(newReview);
-        const saved = saveReviews(reviews);
+        saveReviews(reviews);
 
-        if (saved) {
-          // Reset form
-          reviewForm.reset();
-          document.getElementById('rating').value = 0;
-          
-          // Reset tampilan bintang
-          document.querySelectorAll('.star').forEach(star => {
-            star.textContent = '☆';
-            star.style.color = '#ccc';
-          });
-          
-          // Tampilkan ulasan terbaru
-          displayReviews();
-          
-          // Tampilkan pesan sukses
-          alert('🎉 Terima kasih! Ulasan Anda telah berhasil dikirim.\nUlasan Anda sekarang bisa dilihat oleh semua pengguna.');
-          
-          // Scroll ke bagian ulasan
-          setTimeout(() => {
-            document.getElementById('kontak').scrollIntoView({ behavior: 'smooth' });
-          }, 100);
-        } else {
-          alert('❌ Maaf, terjadi kesalahan saat menyimpan ulasan. Silakan coba lagi.');
-        }
+        // Reset form
+        reviewForm.reset();
+        ratingValue.textContent = '0/5';
+        
+        // Reset stars
+        ratingStars.forEach(star => star.checked = false);
+
+        // Tampilkan ulasan terbaru
+        displayReviews();
+
+        // Tampilkan pesan sukses
+        showNotification('Terima kasih! Ulasan Anda telah berhasil dikirim. ⭐', 'success');
       }
 
-      // ============================================
-      // FUNGSI LAINNYA
-      // ============================================
-
-      // Fungsi untuk toggle theme
-      function toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('dapurai_theme', newTheme);
-      }
-
-      function initializeTheme() {
-        const savedTheme = localStorage.getItem('dapurai_theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-
-      // Fungsi untuk toggle sidebar
-      function toggleSidebar() {
-        hamburgerMenu.classList.toggle('active');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
-      }
-
-      // Fungsi untuk scroll ke home
-      function scrollToHome() {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      }
-
-      // Generator resep
       function normalizeList(text) {
         return text
           .split(',')
@@ -1286,137 +2701,18 @@
         ingredientsList.innerHTML = obj.ingredientsHtml;
         stepsEl.innerHTML = `<ol>${obj.steps.map((s) => `<li style="margin-bottom:6px">${s}</li>`).join('')}</ol>`;
 
+        // Scroll ke bagian ingredients
         setTimeout(() => {
           document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
         }, 100);
       }
 
-      // Fungsi untuk membagikan resep
-      function shareRecipe() {
-        const title = recipeTitle.textContent;
-
-        if (!title || title.startsWith('Hasil')) {
-          alert('Tidak ada resep untuk dibagikan. Silahkan generate resep terlebih dahulu!');
-          return;
-        }
-
-        const ingredientsText = Array.from(ingredientsList.querySelectorAll('.ing'))
-          .map((ing) => ing.textContent)
-          .join(', ');
-
-        const stepsText = Array.from(stepsEl.querySelectorAll('li'))
-          .map((li, index) => `${index + 1}. ${li.textContent}`)
-          .join('\n');
-
-        const timeMatch = metaInfo.textContent.match(/Estimasi waktu:.*?(\d+)/);
-        const caloriesMatch = metaInfo.textContent.match(/Perkiraan kalori:.*?(\d+)/);
-
-        const time = timeMatch ? timeMatch[1] + ' menit' : '';
-        const calories = caloriesMatch ? caloriesMatch[1] + ' kkal' : '';
-
-        const shareText = `🍽️ *${title}* 🍽️
-
-🥗 *Bahan-bahan:*
-${ingredientsText}
-
-👩‍🍳 *Cara Membuat:*
-${stepsText}
-
-⏱️ *Waktu: ${time}*
-🔥 *Kalori: ${calories}*
-
-✨ Dibuat dengan *DapurAI* - Generator Resep Pintar
-🌐 Coba di: ${window.location.origin}`;
-
-        if (navigator.share) {
-          navigator
-            .share({
-              title: `${title} - Resep DapurAI`,
-              text: shareText,
-              url: window.location.href,
-            })
-            .catch((error) => {
-              copyToClipboard(shareText);
-            });
-        } else {
-          copyToClipboard(shareText);
-        }
-      }
-
-      function copyToClipboard(text) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        textarea.setSelectionRange(0, 99999);
-
-        try {
-          const successful = document.execCommand('copy');
-          if (successful) {
-            alert('✅ Resep berhasil disalin ke clipboard!\n\nAnda dapat membagikannya melalui WhatsApp, Instagram, atau media sosial lainnya.');
-          } else {
-            alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
-          }
-        } catch (err) {
-          alert('📋 Salin teks berikut untuk membagikan resep:\n\n' + text);
-        }
-
-        document.body.removeChild(textarea);
-      }
-
-      // ============================================
-      // EVENT LISTENER
-      // ============================================
-
-      // Inisialisasi saat halaman dimuat
-      document.addEventListener('DOMContentLoaded', function () {
-        initializeTheme();
-        displayReviews();
-        setupStarRating();
-        
-        // Set bintang default ke abu-abu
-        document.querySelectorAll('.star').forEach(star => {
-          star.style.color = '#ccc';
-        });
-      });
-
-      // Event listener untuk theme toggle
-      themeToggle.addEventListener('click', toggleTheme);
-      themeToggleSidebar.addEventListener('click', toggleTheme);
-
-      // Event listener untuk hamburger menu
-      hamburgerMenu.addEventListener('click', toggleSidebar);
-      overlay.addEventListener('click', toggleSidebar);
-      sidebar.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => {
-          toggleSidebar();
-        });
-      });
-
-      // Event listener untuk home links
-      homeLink.addEventListener('click', function (e) {
-        e.preventDefault();
-        scrollToHome();
-      });
-
-      homeLinkSidebar.addEventListener('click', function (e) {
-        e.preventDefault();
-        scrollToHome();
-        toggleSidebar();
-      });
-
-      // Event listener untuk form ulasan
-      reviewForm.addEventListener('submit', handleReviewSubmit);
-
-      // Event listener untuk generator resep
       generateBtn.addEventListener('click', () => {
         const text = ingredientsInput.value;
         const cuisine = document.getElementById('cuisine').value;
         const ings = normalizeList(text);
         if (ings.length === 0) {
-          alert('Masukkan minimal satu bahan. Contoh: telur, nasi, ayam');
+          showNotification('Masukkan minimal satu bahan. Contoh: telur, nasi, ayam', 'warning');
           return;
         }
         const recipe = makeRecipe(ings, cuisine);
@@ -1435,15 +2731,107 @@ ${stepsText}
         stepsEl.innerHTML = '';
       });
 
+      // Fungsi untuk berbagi resep
+      function shareRecipe() {
+        const title = recipeTitle.textContent;
+        const meta = metaInfo.textContent;
+        const ingredients = Array.from(ingredientsList.querySelectorAll('.ing')).map(el => el.textContent).join(', ');
+        const steps = stepsEl.textContent;
+        
+        if (!title || title.startsWith('Hasil')) {
+          showNotification('Tidak ada resep untuk dibagikan. Silakan generate resep terlebih dahulu.', 'warning');
+          return;
+        }
+
+        // Membuat konten yang akan dibagikan
+        const shareContent = `
+🍳 RESEP DAPUR AI 🍳
+
+${title}
+${meta}
+
+🧂 Bahan-bahan:
+${ingredients}
+
+📝 Langkah-langkah:
+${steps}
+
+✨ Dibuat dengan DapurAI - Generator Resep Pintar
+🔗 https://dapurai.example.com
+        `;
+
+        // Cek apakah Web Share API tersedia
+        if (navigator.share) {
+          // Gunakan Web Share API jika tersedia
+          navigator.share({
+            title: `Resep: ${title}`,
+            text: shareContent,
+            url: window.location.href
+          })
+          .then(() => {
+            showNotification('Resep berhasil dibagikan!', 'success');
+          })
+          .catch((error) => {
+            console.error('Error sharing:', error);
+            copyToClipboard(shareContent);
+          });
+        } else {
+          // Fallback: salin ke clipboard
+          copyToClipboard(shareContent);
+        }
+      }
+
+      // Fungsi untuk menyalin teks ke clipboard
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            // Tampilkan notifikasi sukses
+            showNotification('Resep berhasil disalin ke clipboard! 📋', 'success');
+          })
+          .catch(err => {
+            console.error('Gagal menyalin: ', err);
+            // Fallback untuk browser lama
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+              document.execCommand('copy');
+              showNotification('Resep berhasil disalin ke clipboard! 📋', 'success');
+            } catch (err) {
+              showNotification('Gagal membagikan resep. Silakan coba lagi.', 'error');
+            }
+            document.body.removeChild(textArea);
+          });
+      }
+
+      // Event listener untuk tombol share
       shareBtn.addEventListener('click', shareRecipe);
 
       ingredientsInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') generateBtn.click();
       });
 
-      document.querySelectorAll('button,input,select').forEach((el) => 
-        el.addEventListener('focus', () => (el.style.outline = '2px solid rgba(248, 88, 168, 0.2)'))
-      );
+      // Event listener untuk form ulasan
+      reviewForm.addEventListener('submit', handleReviewSubmit);
+
+      // Tampilkan ulasan saat halaman dimuat
+      document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        displayReviews();
+        showLoginForm(); // Show login form by default
+        
+        // Check if remember me was set
+        const rememberMe = localStorage.getItem('dapurai_rememberMe');
+        const lastUsername = localStorage.getItem('dapurai_lastUsername');
+        
+        if (rememberMe === 'true' && lastUsername) {
+          usernameInput.value = lastUsername;
+          rememberMeCheckbox.checked = true;
+        }
+      });
+
+      document.querySelectorAll('button,input,select').forEach((el) => el.addEventListener('focus', () => (el.style.outline = '2px solid rgba(248, 88, 168, 0.2)')));
     </script>
   </body>
 </html>

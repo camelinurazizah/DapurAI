@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DapurAI — Login</title>
+    <style>
+      :root {
+        --bg: #fff6ed;
+        --card: #fff;
+        --accent: #f858a8;
+        --accent-light: #f9a8d4;
+        --accent-dark: #fa559f;
+        --muted: #6b6b6b;
+        --shadow: 0 6px 18px rgba(23, 23, 23, 0.08);
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        --facebook: #1877F2;
+        --twitter: #000000;
+        --google: #DB4437;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      }
+
+      /* Mode Gelap */
+      [data-theme='dark'] {
+        --bg: #1a1a1a;
+        --card: #2d2d2d;
+        --accent: #f858a8;
+        --accent-light: #f9a8d4;
+        --accent-dark: #fa559f;
+        --muted: #a0a0a0;
+        --shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        --twitter: #FFFFFF;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        /* GANTI: Menggunakan gambar background */
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                    url('logiin.png') no-repeat center center fixed;
+        background-size: cover;
+        color: #2a2a2a;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        transition: background 0.3s ease, color 0.3s ease;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      /* Opsi 2: Jika ingin gambar lokal, ganti URL di atas dengan path gambar Anda */
+      /* Contoh: background: url('img/background-login.jpg') no-repeat center center fixed; */
+
+      [data-theme='dark'] body {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                    url('logiin.png') no-repeat center center fixed;
+        background-size: cover;
+        color: #f0f0f0;
+      }
+
+      /* Login Container Styles */
+      .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px 35px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 420px;
+        text-align: center;
+        position: relative;
+        animation: slideUp 0.4s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      [data-theme='dark'] .login-container {
+        background: rgba(45, 45, 45, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Logo/Header Styles */
+      .login-logo {
+        margin-bottom: 25px;
+        text-align: center;
+      }
+
+      .login-logo h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #f858a8;
+        margin: 0 0 5px 0;
+        letter-spacing: 0.5px;
+      }
+
+      .login-logo .subtitle {
+        font-size: 14px;
+        color: #6b6b6b;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      [data-theme='dark'] .login-logo h1 {
+        color: #f858a8;
+      }
+
+      [data-theme='dark'] .login-logo .subtitle {
+        color: #a0a0a0;
+      }
+
+      /* Login Header */
+      .login-header {
+        margin-bottom: 30px;
+      }
+
+      .login-header h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #333;
+        margin: 0 0 10px 0;
+        letter-spacing: -0.5px;
+      }
+
+      [data-theme='dark'] .login-header h2 {
+        color: #f0f0f0;
+      }
+
+      .login-header p {
+        color: #666;
+        font-size: 14px;
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      [data-theme='dark'] .login-header p {
+        color: #aaa;
+      }
+
+      /* Form Styles */
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .register-form, .forgot-form {
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .form-group {
+        text-align: left;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      [data-theme='dark'] .form-group label {
+        color: #ccc;
+      }
+
+      /* Input with icon styles */
+      .input-with-icon {
+        position: relative;
+        width: 100%;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        font-size: 16px;
+        background: #f9f9f9;
+        color: #333;
+        transition: all 0.3s ease;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      }
+
+      [data-theme='dark'] .form-group input {
+        border: 2px solid #444;
+        background: rgba(255, 255, 255, 0.05);
+        color: #f0f0f0;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #f858a8;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(248, 88, 168, 0.1);
+      }
+
+      [data-theme='dark'] .form-group input:focus {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .form-group input::placeholder {
+        color: #999;
+        font-size: 15px;
+      }
+
+      [data-theme='dark'] .form-group input::placeholder {
+        color: #777;
+      }
+
+      /* Icon styles */
+      .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .input-icon {
+        color: #aaa;
+      }
+
+      /* Icon khusus untuk Forgot Password form - di sebelah kanan */
+      .input-icon-right {
+        position: absolute;
+        right: 45px; /* Memberi ruang untuk password toggle */
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .input-icon-right {
+        color: #aaa;
+      }
+
+      /* Icon khusus untuk Register form - di sebelah kanan */
+      .register-input-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 18px;
+        z-index: 1;
+      }
+
+      [data-theme='dark'] .register-input-icon {
+        color: #aaa;
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: #999;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition: color 0.3s ease;
+      }
+
+      .password-toggle:hover {
+        color: #f858a8;
+      }
+
+      [data-theme='dark'] .password-toggle {
+        color: #aaa;
+      }
+
+      [data-theme='dark'] .password-toggle:hover {
+        color: #f858a8;
+      }
+
+      /* Khusus untuk input dengan ikon di sebelah kanan */
+      .input-with-right-icon input {
+        padding-right: 40px; /* Memberi ruang untuk ikon di kanan */
+      }
+
+      /* Khusus untuk input username di login form - tanpa ikon */
+      #username {
+        padding-left: 15px !important;
+      }
+
+      /* Khusus untuk input password di login form - tanpa ikon kunci */
+      #password {
+        padding-left: 15px !important;
+      }
+
+      /* Khusus untuk input register tanpa ikon kiri */
+      .register-input-no-left-icon {
+        padding-left: 15px !important;
+        padding-right: 40px; /* Memberi ruang untuk ikon di kanan */
+      }
+
+      /* Checkbox Styles */
+      .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0 25px 0;
+      }
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .remember-me input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #f858a8;
+      }
+
+      .remember-me label {
+        font-size: 14px;
+        color: #666;
+        cursor: pointer;
+        font-weight: 500;
+        text-transform: none;
+        margin: 0;
+      }
+
+      [data-theme='dark'] .remember-me label {
+        color: #aaa;
+      }
+
+      .forgot-password-link a {
+        color: #f858a8;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+      }
+
+      .forgot-password-link a:hover {
+        color: #fa559f;
+        text-decoration: underline;
+      }
+
+      /* Login Button */
+      .login-btn {
+        background: linear-gradient(135deg, #f858a8 0%, #fa559f 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 5px;
+        box-shadow: 0 4px 15px rgba(248, 88, 168, 0.4);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(248, 88, 168, 0.5);
+      }
+
+      .login-btn:active {
+        transform: translateY(0);
+      }
+
+      .login-btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+      }
+
+      .login-btn:focus:not(:active)::after {
+        animation: ripple 1s ease-out;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(0, 0);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(20, 20);
+          opacity: 0;
+        }
+      }
+
+      /* Register Link */
+      .register-link {
+        margin: 20px 0 25px 0;
+        font-size: 14px;
+        color: #666;
+      }
+
+      [data-theme='dark'] .register-link {
+        color: #aaa;
+      }
+
+      .register-link a {
+        color: #f858a8;
+        text-decoration: none;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Message Styles */
+      .error-message, .success-message, .warning-message, .info-message {
+        font-size: 14px;
+        margin-top: 8px;
+        display: none;
+        padding: 12px 16px;
+        border-radius: 10px;
+        border-left: 4px solid;
+        text-align: left;
+        line-height: 1.4;
+      }
+
+      .error-message {
+        color: var(--error);
+        background: rgba(239, 68, 68, 0.08);
+        border-left-color: var(--error);
+      }
+
+      .success-message {
+        color: var(--success);
+        background: rgba(16, 185, 129, 0.08);
+        border-left-color: var(--success);
+      }
+
+      .warning-message {
+        color: var(--warning);
+        background: rgba(245, 158, 11, 0.08);
+        border-left-color: var(--warning);
+      }
+
+      .info-message {
+        color: var(--info);
+        background: rgba(59, 130, 246, 0.08);
+        border-left-color: var(--info);
+      }
+
+      /* Back to login link */
+      .back-to-login {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 20px;
+        font-size: 14px;
+        width: fit-content;
+      }
+
+      .back-to-login:hover {
+        text-decoration: underline;
+      }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+      }
+
+      .theme-toggle:hover {
+        background: rgba(248, 88, 168, 0.1);
+      }
+
+      [data-theme='dark'] .theme-toggle:hover {
+        background: rgba(248, 88, 168, 0.2);
+      }
+
+      .theme-toggle .light-icon {
+        display: none;
+      }
+
+      [data-theme='dark'] .theme-toggle .light-icon {
+        display: block;
+      }
+
+      [data-theme='dark'] .theme-toggle .dark-icon {
+        display: none;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 30px 25px;
+          max-width: 95%;
+        }
+        
+        .login-logo h1 {
+          font-size: 28px;
+        }
+        
+        .login-header h2 {
+          font-size: 22px;
+        }
+        
+        .remember-forgot {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        
+        .form-group input {
+          padding: 14px 15px 14px 15px;
+          font-size: 15px;
+        }
+        
+        .login-btn {
+          padding: 15px;
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container {
+          padding: 25px 20px;
+        }
+        
+        .login-logo h1 {
+          font-size: 26px;
+        }
+        
+        .login-header h2 {
+          font-size: 20px;
+        }
+        
+        .login-btn {
+          padding: 14px;
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <!-- Theme Toggle Button -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="dark-icon">🌙</span>
+        <span class="light-icon">☀️</span>
+      </button>
+
+      <!-- Logo/Header -->
+      <div class="login-logo">
+        <h1>DAPUR AI</h1>
+        <div class="subtitle">Generator Range Pillar</div>
+      </div>
+      
+      <!-- Login Form -->
+      <form class="login-form" id="loginForm">
+        <div class="login-header">
+          <h2>Login to your account</h2>
+        </div>
+        
+        <div class="form-group">
+          <label for="username">USERNAME OR EMAIL</label>
+          <div class="input-with-icon">
+            <input type="text" id="username" placeholder="Type your username or email" required />
+            <div class="error-message" id="usernameError">Username or email must be filled</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">PASSWORD</label>
+          <div class="input-with-icon">
+            <input type="password" id="password" placeholder="Type your password" required />
+            <button type="button" class="password-toggle" id="passwordToggle">
+              <span id="eyeIcon">👁️</span>
+            </button>
+            <div class="error-message" id="passwordError">Password must be filled</div>
+          </div>
+        </div>
+
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="rememberMe" />
+            <label for="rememberMe">Remember me</label>
+          </div>
+          <div class="forgot-password-link">
+            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          LOGIN
+        </button>
+
+        <div class="success-message" id="loginSuccess">Login successful! Redirecting...</div>
+        <div class="error-message" id="loginError">Incorrect username or password</div>
+
+        <div class="register-link">
+          Don't have an account? <a href="#" id="switchLink">Register here</a>
+        </div>
+      </form>
+
+      <!-- Register Form -->
+      <form class="register-form" id="registerForm">
+        <a class="back-to-login" id="backToLoginFromRegister">
+          <span>←</span> Back to Login
+        </a>
+        <div class="login-header">
+          <h2>Create New Account</h2>
+          <p>Join the DapurAI community</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <div class="input-with-icon">
+            <input type="text" id="regName" class="register-input-no-left-icon" placeholder="Enter your full name" required />
+            <span class="register-input-icon">👤</span>
+            <div class="error-message" id="regNameError">Full name must be filled</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regUsername">Username</label>
+          <div class="input-with-icon">
+            <input type="text" id="regUsername" class="register-input-no-left-icon" placeholder="Create unique username" required />
+            <span class="register-input-icon">👤</span>
+            <div class="error-message" id="regUsernameError">Username must be filled</div>
+            <div class="warning-message" id="regUsernameWarning">Username already taken</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regEmail">Email</label>
+          <div class="input-with-icon">
+            <input type="email" id="regEmail" class="register-input-no-left-icon" placeholder="Enter your email" required />
+            <span class="register-input-icon">📧</span>
+            <div class="error-message" id="regEmailError">Email must be filled</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <div class="input-with-icon">
+            <input type="password" id="regPassword" class="register-input-no-left-icon" placeholder="Create password (min 6 characters)" required />
+            <button type="button" class="password-toggle" id="regPasswordToggle">
+              <span id="regEyeIcon">👁️</span>
+            </button>
+            <div class="error-message" id="regPasswordError">Password must be at least 6 characters</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="regConfirmPassword">Confirm Password</label>
+          <div class="input-with-icon">
+            <input type="password" id="regConfirmPassword" class="register-input-no-left-icon" placeholder="Repeat your password" required />
+            <button type="button" class="password-toggle" id="regConfirmPasswordToggle">
+              <span id="regConfirmEyeIcon">👁️</span>
+            </button>
+            <div class="error-message" id="regConfirmPasswordError">Password confirmation doesn't match</div>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          REGISTER
+        </button>
+
+        <div class="success-message" id="registerSuccess">Registration successful! Redirecting...</div>
+        
+        <div class="register-link">
+          Already have an account? <a href="#" id="switchToLoginFromReg">Login here</a>
+        </div>
+      </form>
+
+      <!-- Forgot Password Form -->
+      <form class="forgot-form" id="forgotForm">
+        <a class="back-to-login" id="backToLoginFromForgot">
+          <span>←</span> Back to Login
+        </a>
+        <div class="login-header">
+          <h2>Forgot Password</h2>
+          <p>Enter your email to reset password</p>
+        </div>
+        
+        <div class="form-group">
+          <label for="forgotEmail">Registered Email</label>
+          <div class="input-with-icon">
+            <input type="email" id="forgotEmail" placeholder="Enter your email" required />
+            <span class="input-icon-right">📧</span>
+            <div class="error-message" id="forgotEmailError">Email must be filled</div>
+            <div class="info-message" id="forgotEmailInfo">Reset password instructions will be sent to your email</div>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn">
+          SEND RESET LINK
+        </button>
+
+        <div class="success-message" id="forgotSuccess">Reset password link has been sent to your email!</div>
+      </form>
+    </div>
+
+    <script>
+      // ===== USER MANAGEMENT SYSTEM =====
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const forgotForm = document.getElementById('forgotForm');
+      const switchLink = document.getElementById('switchLink');
+      const switchToLoginFromReg = document.getElementById('switchToLoginFromReg');
+      
+      // Login form elements
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const rememberMeCheckbox = document.getElementById('rememberMe');
+      const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+      const usernameError = document.getElementById('usernameError');
+      const passwordError = document.getElementById('passwordError');
+      const loginSuccess = document.getElementById('loginSuccess');
+      const loginError = document.getElementById('loginError');
+      const passwordToggle = document.getElementById('passwordToggle');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      // Register form elements
+      const regNameInput = document.getElementById('regName');
+      const regUsernameInput = document.getElementById('regUsername');
+      const regEmailInput = document.getElementById('regEmail');
+      const regPasswordInput = document.getElementById('regPassword');
+      const regConfirmPasswordInput = document.getElementById('regConfirmPassword');
+      const backToLoginFromRegister = document.getElementById('backToLoginFromRegister');
+      const regNameError = document.getElementById('regNameError');
+      const regUsernameError = document.getElementById('regUsernameError');
+      const regEmailError = document.getElementById('regEmailError');
+      const regUsernameWarning = document.getElementById('regUsernameWarning');
+      const regPasswordError = document.getElementById('regPasswordError');
+      const regConfirmPasswordError = document.getElementById('regConfirmPasswordError');
+      const registerSuccess = document.getElementById('registerSuccess');
+      const regPasswordToggle = document.getElementById('regPasswordToggle');
+      const regConfirmPasswordToggle = document.getElementById('regConfirmPasswordToggle');
+      const regEyeIcon = document.getElementById('regEyeIcon');
+      const regConfirmEyeIcon = document.getElementById('regConfirmEyeIcon');
+      
+      // Forgot password elements
+      const forgotEmailInput = document.getElementById('forgotEmail');
+      const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
+      const forgotEmailError = document.getElementById('forgotEmailError');
+      const forgotEmailInfo = document.getElementById('forgotEmailInfo');
+      const forgotSuccess = document.getElementById('forgotSuccess');
+
+      // Theme toggle
+      const themeToggle = document.getElementById('themeToggle');
+
+      // Demo credentials and user storage
+      let users = JSON.parse(localStorage.getItem('dapurai_users') || '[]');
+      
+      // Initialize with demo users if none exist
+      if (users.length === 0) {
+        users = [
+          { 
+            id: 1, 
+            username: 'user', 
+            password: '123', 
+            name: 'User Demo',
+            email: 'user@demo.com',
+            createdAt: new Date().toISOString()
+          },
+          { 
+            id: 2, 
+            username: 'chef', 
+            password: 'masak', 
+            name: 'Chef Professional',
+            email: 'chef@dapurai.com',
+            createdAt: new Date().toISOString()
+          },
+          { 
+            id: 3, 
+            username: 'admin', 
+            password: 'admin123', 
+            name: 'Administrator',
+            email: 'admin@dapurai.com',
+            createdAt: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem('dapurai_users', JSON.stringify(users));
+      }
+
+      // Function to show notification
+      function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: ${type === 'success' ? 'var(--success)' : 
+                      type === 'error' ? 'var(--error)' : 
+                      type === 'warning' ? 'var(--warning)' : 'var(--accent)'};
+          color: white;
+          padding: 15px 20px;
+          border-radius: 10px;
+          box-shadow: var(--shadow);
+          z-index: 1001;
+          animation: slideInRight 0.3s ease;
+          font-weight: 600;
+          max-width: 300px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        `;
+        
+        notification.innerHTML = `
+          <span style="font-size: 20px;">${type === 'success' ? '✅' : 
+                            type === 'error' ? '❌' : 
+                            type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+          <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+          notification.style.animation = 'slideOutRight 0.3s ease';
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+          }, 300);
+        }, 3000);
+      }
+
+      // Function to toggle password visibility
+      function togglePasswordVisibility(inputId, eyeIconId) {
+        const passwordInput = document.getElementById(inputId);
+        const eyeIcon = document.getElementById(eyeIconId);
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          eyeIcon.textContent = '👁️‍🗨️'; // Open eye
+        } else {
+          passwordInput.type = 'password';
+          eyeIcon.textContent = '👁️'; // Closed eye
+        }
+      }
+
+      // Initialize password toggles
+      passwordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('password', 'eyeIcon');
+      });
+
+      regPasswordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('regPassword', 'regEyeIcon');
+      });
+
+      regConfirmPasswordToggle.addEventListener('click', function() {
+        togglePasswordVisibility('regConfirmPassword', 'regConfirmEyeIcon');
+      });
+
+      // Function to show login form
+      function showLoginForm() {
+        loginForm.style.display = 'flex';
+        registerForm.style.display = 'none';
+        forgotForm.style.display = 'none';
+        resetErrorMessages();
+      }
+
+      // Function to show register form
+      function showRegisterForm() {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'flex';
+        forgotForm.style.display = 'none';
+        resetErrorMessages();
+      }
+
+      // Function to show forgot password form
+      function showForgotForm() {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+        forgotForm.style.display = 'flex';
+        resetErrorMessages();
+      }
+
+      // Reset all error messages
+      function resetErrorMessages() {
+        // Login errors
+        usernameError.style.display = 'none';
+        passwordError.style.display = 'none';
+        loginSuccess.style.display = 'none';
+        loginError.style.display = 'none';
+        
+        // Register errors
+        regNameError.style.display = 'none';
+        regUsernameError.style.display = 'none';
+        regEmailError.style.display = 'none';
+        regUsernameWarning.style.display = 'none';
+        regPasswordError.style.display = 'none';
+        regConfirmPasswordError.style.display = 'none';
+        registerSuccess.style.display = 'none';
+        
+        // Forgot password errors
+        forgotEmailError.style.display = 'none';
+        forgotEmailInfo.style.display = 'none';
+        forgotSuccess.style.display = 'none';
+      }
+
+      // Check if user is already logged in
+      function checkLoginStatus() {
+        const loggedInUser = localStorage.getItem('dapurai_loggedInUser');
+        if (loggedInUser) {
+          // Redirect to index.html if already logged in
+          window.location.href = 'index.html';
+        }
+      }
+
+      // Show main application
+      function showMainApp(user) {
+        // Save login status and redirect
+        localStorage.setItem('dapurai_loggedInUser', JSON.stringify(user));
+        window.location.href = 'index.html';
+      }
+
+      // Handle login form submission
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const rememberMe = rememberMeCheckbox.checked;
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate username
+        if (!username) {
+          usernameError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password) {
+          passwordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Check credentials
+        const user = users.find(u => u.username === username && u.password === password);
+        
+        if (user) {
+          // Login successful
+          loginSuccess.style.display = 'block';
+          
+          // Save remember me preference
+          if (rememberMe) {
+            localStorage.setItem('dapurai_rememberMe', 'true');
+            localStorage.setItem('dapurai_lastUsername', username);
+          } else {
+            localStorage.removeItem('dapurai_rememberMe');
+            localStorage.removeItem('dapurai_lastUsername');
+          }
+          
+          // Show main app after delay
+          setTimeout(() => {
+            showMainApp(user);
+          }, 1000);
+        } else {
+          // Login failed
+          loginError.style.display = 'block';
+        }
+      });
+
+      // Handle register form submission
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = regNameInput.value.trim();
+        const username = regUsernameInput.value.trim();
+        const email = regEmailInput.value.trim();
+        const password = regPasswordInput.value.trim();
+        const confirmPassword = regConfirmPasswordInput.value.trim();
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate name
+        if (!name) {
+          regNameError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate username
+        if (!username) {
+          regUsernameError.style.display = 'block';
+          isValid = false;
+        } else if (users.find(u => u.username === username)) {
+          regUsernameWarning.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate email
+        if (!email) {
+          regEmailError.style.display = 'block';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          regEmailError.textContent = 'Email tidak valid';
+          regEmailError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password || password.length < 6) {
+          regPasswordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        // Validate confirm password
+        if (password !== confirmPassword) {
+          regConfirmPasswordError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Create new user
+        const newUser = {
+          id: Date.now(),
+          username: username,
+          password: password,
+          name: name,
+          email: email,
+          createdAt: new Date().toISOString()
+        };
+        
+        // Add user to storage
+        users.push(newUser);
+        localStorage.setItem('dapurai_users', JSON.stringify(users));
+        
+        // Show success message
+        registerSuccess.style.display = 'block';
+        
+        // Auto login after registration
+        setTimeout(() => {
+          showMainApp(newUser);
+        }, 1500);
+      });
+
+      // Handle forgot password form submission
+      forgotForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = forgotEmailInput.value.trim();
+        
+        // Reset error messages
+        resetErrorMessages();
+        
+        let isValid = true;
+        
+        // Validate email
+        if (!email) {
+          forgotEmailError.style.display = 'block';
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          forgotEmailError.textContent = 'Email tidak valid';
+          forgotEmailError.style.display = 'block';
+          isValid = false;
+        }
+        
+        if (!isValid) return;
+        
+        // Check if email exists
+        const user = users.find(u => u.email === email);
+        
+        if (user) {
+          // Show success message
+          forgotEmailInfo.style.display = 'block';
+          forgotSuccess.style.display = 'block';
+          
+          // Simulate sending reset email
+          setTimeout(() => {
+            showLoginForm();
+            showNotification(`Link reset password telah dikirim ke ${email}. Untuk demo, password telah direset ke "password123".`, 'info');
+            
+            // Reset password for demo (in real app, this would be handled by email verification)
+            user.password = 'password123';
+            localStorage.setItem('dapurai_users', JSON.stringify(users));
+          }, 1000);
+        } else {
+          forgotEmailError.textContent = 'Email tidak terdaftar';
+          forgotEmailError.style.display = 'block';
+        }
+      });
+
+      // Handle form switching
+      switchLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showRegisterForm();
+      });
+
+      // Handle switch from register to login
+      switchToLoginFromReg.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      // Forgot password link
+      forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        showForgotForm();
+      });
+
+      // Back to login links
+      backToLoginFromRegister.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      backToLoginFromForgot.addEventListener('click', function(e) {
+        e.preventDefault();
+        showLoginForm();
+      });
+
+      // Fungsi untuk toggle theme
+      function toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('dapurai_theme', newTheme);
+      }
+
+      // Fungsi untuk mengatur tema awal
+      function initializeTheme() {
+        const savedTheme = localStorage.getItem('dapurai_theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      // Event listener untuk toggle theme
+      themeToggle.addEventListener('click', toggleTheme);
+
+      // Initialize on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        showLoginForm();
+        initializeTheme();
+        
+        // Check if remember me was set
+        const rememberMe = localStorage.getItem('dapurai_rememberMe');
+        const lastUsername = localStorage.getItem('dapurai_lastUsername');
+        
+        if (rememberMe === 'true' && lastUsername) {
+          usernameInput.value = lastUsername;
+          rememberMeCheckbox.checked = true;
+        }
+      });
+    </script>
+  </body>
+</html>

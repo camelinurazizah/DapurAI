@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DapurAI — Profil Pengguna</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .profile-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+      .profile-card {
+        background: var(--card);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+      }
+      .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #eee;
+      }
+      .large-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: white;
+        font-size: 32px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .profile-info h2 {
+        margin: 0 0 5px 0;
+        color: #333;
+      }
+      .profile-info p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .pref-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+      @media (max-width: 600px) {
+        .pref-grid {
+          grid-template-columns: 1fr;
+        }
+        .profile-header {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+      }
+      textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        font-family: inherit;
+        resize: vertical;
+      }
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body style="min-height: 100vh; display: block; background: var(--bg)">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-container">
+        <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+          <circle
+            class="pl__ring pl__ring--a"
+            cx="120"
+            cy="120"
+            r="105"
+            fill="none"
+            stroke="#000"
+            stroke-width="20"
+            stroke-dasharray="0 660"
+            stroke-dashoffset="-330"
+            stroke-linecap="round"
+          ></circle>
+          <circle
+            class="pl__ring pl__ring--b"
+            cx="120"
+            cy="120"
+            r="35"
+            fill="none"
+            stroke="#000"
+            stroke-width="20"
+            stroke-dasharray="0 220"
+            stroke-dashoffset="-110"
+            stroke-linecap="round"
+          ></circle>
+          <circle
+            class="pl__ring pl__ring--c"
+            cx="85"
+            cy="120"
+            r="70"
+            fill="none"
+            stroke="#000"
+            stroke-width="20"
+            stroke-dasharray="0 440"
+            stroke-linecap="round"
+          ></circle>
+          <circle
+            class="pl__ring pl__ring--d"
+            cx="155"
+            cy="120"
+            r="70"
+            fill="none"
+            stroke="#000"
+            stroke-width="20"
+            stroke-dasharray="0 440"
+            stroke-linecap="round"
+          ></circle>
+        </svg>
+        <div class="loading-text" id="loadingText">Memuat...</div>
+      </div>
+    </div>
+
+    <div class="profile-container">
+      <a href="index.html" class="back-btn">← Kembali ke Generator</a>
+
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="large-avatar" id="profileAvatar">U</div>
+          <div class="profile-info">
+            <h2 id="profileName">Loading...</h2>
+            <p id="profileEmail">loading...</p>
+          </div>
+        </div>
+
+        <form id="preferencesForm">
+          <div class="section-title">
+            <span>⚙️</span> Preferensi Diet (Global)
+          </div>
+          <p style="margin-bottom: 20px; font-size: 14px; color: #666">
+            Pengaturan ini akan diterapkan secara otomatis setiap kali Anda
+            generate resep.
+          </p>
+
+          <div class="pref-grid">
+            <div class="form-group">
+              <label>Batas Kalori (kkal)</label>
+              <input
+                type="number"
+                id="calorieLimit"
+                class="form-control"
+                placeholder="Contoh: 500"
+              />
+            </div>
+            <div class="form-group">
+              <label>Tingkat Pedas (0-10)</label>
+              <input
+                type="number"
+                id="spicyLevel"
+                class="form-control"
+                min="0"
+                max="10"
+                placeholder="0 = Tidak Pedas"
+              />
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px">
+            <label>Hindari Bahan (Alergi/Pantangan)</label>
+            <input
+              type="text"
+              id="avoidFoods"
+              class="form-control"
+              placeholder="Contoh: Kacang, Udang, Santan"
+            />
+          </div>
+
+          <div class="section-title">
+            <span>📝</span> Catatan Tambahan Default
+          </div>
+          <div class="form-group" style="margin-bottom: 30px">
+            <label>Instruksi Khusus (Optional)</label>
+            <textarea
+              id="defaultAdjustment"
+              rows="3"
+              placeholder="Contoh: Saya suka masakan yang berkuah, atau jangan pakai MSG."
+            ></textarea>
+            <small style="color: #999; display: block; margin-top: 5px">
+              Catatan ini akan ditambahkan sebagai 'Adjustment' di setiap
+              request.
+            </small>
+          </div>
+
+          <button type="submit" class="login-btn" id="saveBtn">
+            SIMPAN PERUBAHAN
+          </button>
+          <div
+            class="success-message"
+            id="saveSuccess"
+            style="margin-top: 15px"
+          >
+            Perubahan berhasil disimpan!
+          </div>
+          <div class="error-message" id="saveError" style="margin-top: 15px">
+            Gagal menyimpan perubahan.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        // Loading Overlay Functions
+        const loadingOverlay = document.getElementById("loadingOverlay");
+        const loadingText = document.getElementById("loadingText");
+
+        function showLoading(message = "Memuat...") {
+          if (loadingText) loadingText.textContent = message;
+          if (loadingOverlay) loadingOverlay.classList.add("active");
+        }
+
+        function hideLoading() {
+          if (loadingOverlay) loadingOverlay.classList.remove("active");
+        }
+
+        showLoading("Memuat profil Anda...");
+
+        const token = localStorage.getItem("dapurai_token");
+        if (!token) {
+          hideLoading();
+          window.location.href = "login.html";
+          return;
+        }
+
+        const profileName = document.getElementById("profileName");
+        const profileEmail = document.getElementById("profileEmail");
+        const profileAvatar = document.getElementById("profileAvatar");
+
+        // Inputs
+        const calorieLimit = document.getElementById("calorieLimit");
+        const spicyLevel = document.getElementById("spicyLevel");
+        const avoidFoods = document.getElementById("avoidFoods");
+        const defaultAdjustment = document.getElementById("defaultAdjustment");
+        const saveBtn = document.getElementById("saveBtn");
+        const saveSuccess = document.getElementById("saveSuccess");
+
+        // 1. Fetch User Data
+        const userRes = await api.get("/profile", token);
+        if (userRes.success) {
+          const user = userRes.data;
+          profileName.textContent = user.name;
+          profileEmail.textContent = user.email;
+          profileAvatar.textContent = (user.name || "U")
+            .charAt(0)
+            .toUpperCase();
+        }
+
+        // 2. Fetch Preferences (DB)
+        const prefRes = await api.get("/profile/preferences", token);
+        if (prefRes.success && prefRes.data) {
+          const p = prefRes.data;
+          if (p.calorieLimit) calorieLimit.value = p.calorieLimit;
+          if (p.spicyLevel) spicyLevel.value = p.spicyLevel;
+          if (p.avoidFoods) avoidFoods.value = p.avoidFoods;
+        }
+
+        // 3. Load Local Preferences (Default Adjustment)
+        const localAdj = localStorage.getItem("dapurai_default_adjustment");
+        if (localAdj) defaultAdjustment.value = localAdj;
+
+        hideLoading();
+
+        // 4. Save Handler
+        document
+          .getElementById("preferencesForm")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            showLoading("💾 Menyimpan preferensi...");
+            saveBtn.disabled = true;
+            saveSuccess.style.display = "none";
+
+            // Save to DB
+            const dbData = {
+              calorieLimit: calorieLimit.value,
+              spicyLevel: spicyLevel.value,
+              avoidFoods: avoidFoods.value,
+            };
+
+            const updateRes = await api.post(
+              "/profile/preferences",
+              dbData,
+              token
+            );
+
+            // Save to LocalStorage
+            localStorage.setItem(
+              "dapurai_default_adjustment",
+              defaultAdjustment.value
+            );
+
+            saveBtn.disabled = false;
+            hideLoading();
+
+            if (updateRes.success) {
+              saveSuccess.style.display = "block";
+              setTimeout(() => (saveSuccess.style.display = "none"), 3000);
+            } else {
+              alert(
+                "Gagal menyimpan ke database: " +
+                  (updateRes.message || updateRes.error)
+              );
+            }
+          });
+      });
+    </script>
+  </body>
+</html>

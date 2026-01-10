@@ -36,6 +36,7 @@
               placeholder="Type your email"
               required
             />
+            <span class="register-input-icon">📧</span>
             <div class="error-message" id="usernameError">
               Username or email must be filled
             </div>
@@ -59,7 +60,7 @@
             </div>
           </div>
         </div>
-
+        <!-- forgot password -->
         <div class="remember-forgot">
           <div class="remember-me">
             <input type="checkbox" id="rememberMe" />
@@ -85,7 +86,7 @@
       </form>
 
       <!-- Register Form -->
-      <form class="register-form" id="registerForm">
+      <form class="register-form" id="registerForm" style="display: none;">
         <a class="back-to-login" id="backToLoginFromRegister">
           <span>←</span> Back to Login
         </a>
@@ -187,7 +188,7 @@
       </form>
 
       <!-- Forgot Password Form -->
-      <form class="forgot-form" id="forgotForm">
+      <form class="forgot-form" id="forgotForm" style="display: none;">
         <a class="back-to-login" id="backToLoginFromForgot">
           <span>←</span> Back to Login
         </a>
@@ -225,6 +226,9 @@
               placeholder="Enter new password"
               required
             />
+            <button type="button" class="password-toggle" id="forgotPasswordToggle">
+              <span id="forgotEyeIcon">👁️</span>
+            </button>
             <div class="error-message" id="forgotPasswordError">
               Password must be filled
             </div>

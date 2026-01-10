@@ -112,6 +112,98 @@ document.addEventListener("DOMContentLoaded", async () => {
   const recipeTitle = document.getElementById("recipeTitle");
   const metaInfo = document.getElementById("metaInfo");
 
+  // 4. Share and Clear Buttons Functionality - TAMBAHKAN INI
+  const shareBtn = document.getElementById("shareBtn");
+  const clearBtn = document.getElementById("clearBtn");
+
+  // Function to handle sharing recipe
+  async function shareRecipe() {
+    const title = recipeTitle.textContent;
+    const meta = metaInfo.textContent;
+    const ingredients = ingredientsListEl ? ingredientsListEl.textContent : "";
+    const steps = stepsEl ? stepsEl.textContent : "";
+    
+    // Check if there's a recipe to share
+    if (!title || title === "Hasil resep akan muncul di sini" || 
+        title === "Sedang meracik resep...") {
+      alert("Belum ada resep untuk dibagikan. Silakan generate resep terlebih dahulu!");
+      return;
+    }
+    
+    // Create share content
+    const shareContent = `🍳 RESEP DAPUR AI 🍳\n\n${title}\n${meta}\n\n🧂 Bahan-bahan:\n${ingredients}\n\n📝 Langkah-langkah:\n${steps}\n\n✨ Dibuat dengan DapurAI - Generator Resep Pintar`;
+    
+    // Try Web Share API first (for mobile devices)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Resep: ${title}`,
+          text: shareContent,
+          url: window.location.href,
+        });
+        alert("Resep berhasil dibagikan! 📤");
+      } catch (err) {
+        console.error('Error sharing:', err);
+        // Fallback to clipboard
+        copyToClipboard(shareContent);
+      }
+    } else {
+      // Fallback: copy to clipboard for desktop
+      copyToClipboard(shareContent);
+    }
+  }
+
+  // Function to copy text to clipboard
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("Resep berhasil disalin ke clipboard! 📋");
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      // Fallback method for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        alert("Resep berhasil disalin ke clipboard! 📋");
+      } catch (err) {
+        alert("Gagal menyalin resep. Silakan coba lagi.");
+      }
+      document.body.removeChild(textArea);
+    });
+  }
+
+  // Function to clear/clean recipe
+  function clearRecipe() {
+    // Clear the input field
+    if (ingredientsInput) ingredientsInput.value = "";
+    
+    // Reset recipe display
+    if (recipeTitle) recipeTitle.textContent = "Hasil resep akan muncul di sini";
+    if (metaInfo) metaInfo.textContent = "Masukkan bahan lalu klik Generate.";
+    if (ingredientsListEl) ingredientsListEl.innerHTML = "";
+    if (stepsEl) stepsEl.innerHTML = "";
+    
+    // Show success message
+    alert("Resep berhasil dihapus! 🧹");
+    
+    // Scroll back to generator section
+    const generatorSection = document.getElementById("generator");
+    if (generatorSection) {
+      generatorSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  // Add event listeners for Share and Clear buttons
+  if (shareBtn) {
+    shareBtn.addEventListener("click", shareRecipe);
+  }
+  
+  if (clearBtn) {
+    clearBtn.addEventListener("click", clearRecipe);
+  }
+
   if (generateBtn) {
     generateBtn.addEventListener("click", async () => {
       const ingredients = ingredientsInput.value
@@ -169,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // 4. Review Logic (API)
+  // 5. Review Logic (API)
   const reviewForm = document.getElementById("reviewForm");
   const reviewList = document.getElementById("reviewList");
   const ratingValue = document.getElementById("ratingValue");
@@ -308,4 +400,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (themeToggle) themeToggle.addEventListener("click", toggleTheme);
   if (themeToggleSidebar)
     themeToggleSidebar.addEventListener("click", toggleTheme);
+
+  // Enter key support for ingredients input
+  if (ingredientsInput) {
+    ingredientsInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && generateBtn) {
+        e.preventDefault();
+        generateBtn.click();
+      }
+    });
+  }
 });

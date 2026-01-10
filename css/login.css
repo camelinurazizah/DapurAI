@@ -37,7 +37,7 @@ body {
   margin: 0;
   /* GANTI: Menggunakan gambar background */
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("logiin.png") no-repeat center center fixed;
+    url("../logiin.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #2a2a2a;
   scroll-behavior: smooth;
@@ -55,7 +55,7 @@ body {
 
 [data-theme="dark"] body {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("logiin.png") no-repeat center center fixed;
+    url("../logiin.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #f0f0f0;
 }
@@ -185,6 +185,7 @@ body {
 .input-with-icon {
   position: relative;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 .form-group input {
@@ -244,7 +245,7 @@ body {
 /* Icon khusus untuk Forgot Password form - di sebelah kanan */
 .input-icon-right {
   position: absolute;
-  right: 45px; /* Memberi ruang untuk password toggle */
+  right: 50px; /* Memberi ruang untuk password toggle */
   top: 50%;
   transform: translateY(-50%);
   color: #999;
@@ -265,6 +266,7 @@ body {
   color: #999;
   font-size: 18px;
   z-index: 1;
+  
 }
 
 [data-theme="dark"] .register-input-icon {
@@ -289,6 +291,7 @@ body {
   justify-content: center;
   z-index: 2;
   transition: color 0.3s ease;
+  border-radius: 50%;
 }
 
 .password-toggle:hover {
@@ -321,7 +324,7 @@ body {
 /* Khusus untuk input register tanpa ikon kiri */
 .register-input-no-left-icon {
   padding-left: 15px !important;
-  padding-right: 40px; /* Memberi ruang untuk ikon di kanan */
+  padding-right: 50px !important;/* Memberi ruang untuk ikon di kanan */
 }
 
 /* Checkbox Styles */

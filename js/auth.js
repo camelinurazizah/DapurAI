@@ -1,4 +1,38 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // ========== TAMBAHKAN KODE INI DI SINI (AWAL) ==========
+  // Theme Toggle Functionality
+  const themeToggle = document.getElementById("themeToggle");
+  
+  // Check saved theme or default to light
+  const savedTheme = localStorage.getItem("dapurai_theme");
+  if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+  
+  // Add click event to theme toggle button
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function() {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      const savedTheme = localStorage.getItem("dapurai_theme");
+      
+      if (savedTheme) {
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  } else {
+    document.documentElement.setAttribute("data-theme", "light");
+  }
+  
+
+      // Apply new theme
+      document.documentElement.setAttribute("data-theme", newTheme);
+      // Save to localStorage
+      localStorage.setItem("dapurai_theme", newTheme);
+    });
+  }
+  // ========== SAMPAI DI SINI ==========
+
   // Check if already logged in
   const token = localStorage.getItem("dapurai_token");
   if (token) {
@@ -51,6 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const registerSuccess = document.getElementById("registerSuccess");
   const regPasswordToggle = document.getElementById("regPasswordToggle");
+  const forgotPasswordInput = document.getElementById("forgotPassword");
+  const forgotPasswordToggle = document.getElementById("forgotPasswordToggle");
+  const forgotPasswordError = document.getElementById("forgotPasswordError");
   const regConfirmPasswordToggle = document.getElementById(
     "regConfirmPasswordToggle"
   );
@@ -76,10 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const iconSpan = document.getElementById(eyeIconId);
     if (input.type === "password") {
       input.type = "text";
-      if (iconSpan) iconSpan.textContent = "👁️‍🗨️";
+      if (iconSpan) iconSpan.textContent = "🙈"; // PERBAIKAN: ganti icon
     } else {
       input.type = "password";
-      if (iconSpan) iconSpan.textContent = "👁️";
+      if (iconSpan) iconSpan.textContent = "👁️"; // PERBAIKAN: ganti icon
     }
   }
 
@@ -95,6 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (regConfirmPasswordToggle)
     regConfirmPasswordToggle.addEventListener("click", () =>
       togglePasswordVisibility("regConfirmPassword", "regConfirmEyeIcon")
+    );
+
+  if (forgotPasswordToggle)
+    forgotPasswordToggle.addEventListener("click", () =>
+      togglePasswordVisibility("forgotPassword", "forgotEyeIcon")
     );
 
   // Form switching
@@ -125,6 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
         ".error-message, .success-message, .warning-message, .info-message"
       )
       .forEach((el) => (el.style.display = "none"));
+      
+    // ========== TAMBAHKAN INI ==========
+    if (forgotPasswordError) forgotPasswordError.style.display = "none";
+    // ========== SAMPAI DI SINI ==========
   }
 
   if (switchLink)
@@ -263,10 +309,26 @@ document.addEventListener("DOMContentLoaded", () => {
     resetErrorMessages();
 
     const email = forgotEmailInput.value.trim();
+    const newPassword = forgotPasswordInput ? forgotPasswordInput.value.trim() : "";
+
     if (!email) {
       forgotEmailError.style.display = "block";
       return;
     }
+    
+    // ========== TAMBAHKAN VALIDASI INI ==========
+    if (!newPassword) {
+      forgotPasswordError.textContent = "New password must be filled";
+      forgotPasswordError.style.display = "block";
+      return;
+    }
+    
+    if (newPassword.length < 6) {
+      forgotPasswordError.textContent = "Password must be at least 6 characters";
+      forgotPasswordError.style.display = "block";
+      return;
+    }
+    // ========== SAMPAI DI SINI ==========
 
     // This endpoint takes email AND password according to swagger?
     // router.post("/auth/forgot-password", validateForgotPassword, userController.forgotPassword);
@@ -293,13 +355,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // userController.forgotPassword
 
     // Placeholder logic:
-    const res = await api.post("/auth/forgot-password", { email });
-    if (res.success || res.message) {
-      forgotSuccess.style.display = "block";
-      forgotEmailInfo.style.display = "block";
-    } else {
-      forgotEmailError.textContent = res.message || "Request failed";
+    // ========== PERBAIKAN API CALL INI ==========
+    try {
+      const res = await api.post("/auth/forgot-password", { 
+        email: email, 
+        password: newPassword 
+      });
+      
+      if (res.success || res.message) {
+        forgotSuccess.style.display = "block";
+        forgotEmailInfo.style.display = "block";
+        
+        // Reset form setelah sukses
+        setTimeout(() => {
+          forgotEmailInput.value = "";
+          if (forgotPasswordInput) forgotPasswordInput.value = "";
+          showLoginForm();
+        }, 2000);
+      } else {
+        forgotEmailError.textContent = res.message || "Request failed";
+        forgotEmailError.style.display = "block";
+      }
+    } catch (error) {
+      forgotEmailError.textContent = "Failed to reset password. Please try again.";
       forgotEmailError.style.display = "block";
     }
+    // ========== SAMPAI DI SINI ==========
   });
 });

@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ========== TAMBAHKAN KODE INI DI SINI (AWAL) ==========
   // Theme Toggle Functionality
   const themeToggle = document.getElementById("themeToggle");
-  
+
   // Check saved theme or default to light
   const savedTheme = localStorage.getItem("dapurai_theme");
   if (savedTheme) {
@@ -10,20 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     document.documentElement.setAttribute("data-theme", "light");
   }
-  
+
   // Add click event to theme toggle button
   if (themeToggle) {
-    themeToggle.addEventListener("click", function() {
+    themeToggle.addEventListener("click", function () {
       const currentTheme = document.documentElement.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
       const savedTheme = localStorage.getItem("dapurai_theme");
-      
+
       if (savedTheme) {
-    document.documentElement.setAttribute("data-theme", savedTheme);
-  } else {
-    document.documentElement.setAttribute("data-theme", "light");
-  }
-  
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
 
       // Apply new theme
       document.documentElement.setAttribute("data-theme", newTheme);
@@ -73,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const regPasswordInput = document.getElementById("regPassword");
   const regConfirmPasswordInput = document.getElementById("regConfirmPassword");
   const backToLoginFromRegister = document.getElementById(
-    "backToLoginFromRegister"
+    "backToLoginFromRegister",
   );
   const regNameError = document.getElementById("regNameError");
   // const regUsernameError = document.getElementById("regUsernameError");
@@ -81,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // const regUsernameWarning = document.getElementById("regUsernameWarning");
   const regPasswordError = document.getElementById("regPasswordError");
   const regConfirmPasswordError = document.getElementById(
-    "regConfirmPasswordError"
+    "regConfirmPasswordError",
   );
   const registerSuccess = document.getElementById("registerSuccess");
   const regPasswordToggle = document.getElementById("regPasswordToggle");
@@ -89,13 +88,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const forgotPasswordToggle = document.getElementById("forgotPasswordToggle");
   const forgotPasswordError = document.getElementById("forgotPasswordError");
   const regConfirmPasswordToggle = document.getElementById(
-    "regConfirmPasswordToggle"
+    "regConfirmPasswordToggle",
   );
 
   // Forgot password elements
   const forgotEmailInput = document.getElementById("forgotEmail");
   const backToLoginFromForgot = document.getElementById(
-    "backToLoginFromForgot"
+    "backToLoginFromForgot",
   );
   const forgotEmailError = document.getElementById("forgotEmailError");
   const forgotEmailInfo = document.getElementById("forgotEmailInfo");
@@ -113,30 +112,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const iconSpan = document.getElementById(eyeIconId);
     if (input.type === "password") {
       input.type = "text";
-      if (iconSpan) iconSpan.textContent = "🙈"; // PERBAIKAN: ganti icon
+      if (iconSpan) {
+        iconSpan.innerHTML = '<i data-lucide="eye-off"></i>';
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons({
+            root: iconSpan,
+          });
+        }
+      }
     } else {
       input.type = "password";
-      if (iconSpan) iconSpan.textContent = "👁️"; // PERBAIKAN: ganti icon
+      if (iconSpan) {
+        iconSpan.innerHTML = '<i data-lucide="eye"></i>';
+        if (typeof lucide !== "undefined") {
+          lucide.createIcons({
+            root: iconSpan,
+          });
+        }
+      }
     }
   }
 
   // Initialize password toggles
   if (passwordToggle)
     passwordToggle.addEventListener("click", () =>
-      togglePasswordVisibility("password", "eyeIcon")
+      togglePasswordVisibility("password", "eyeIcon"),
     );
   if (regPasswordToggle)
     regPasswordToggle.addEventListener("click", () =>
-      togglePasswordVisibility("regPassword", "regEyeIcon")
+      togglePasswordVisibility("regPassword", "regEyeIcon"),
     );
   if (regConfirmPasswordToggle)
     regConfirmPasswordToggle.addEventListener("click", () =>
-      togglePasswordVisibility("regConfirmPassword", "regConfirmEyeIcon")
+      togglePasswordVisibility("regConfirmPassword", "regConfirmEyeIcon"),
     );
 
   if (forgotPasswordToggle)
     forgotPasswordToggle.addEventListener("click", () =>
-      togglePasswordVisibility("forgotPassword", "forgotEyeIcon")
+      togglePasswordVisibility("forgotPassword", "forgotEyeIcon"),
     );
 
   // Form switching
@@ -164,10 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetErrorMessages() {
     document
       .querySelectorAll(
-        ".error-message, .success-message, .warning-message, .info-message"
+        ".error-message, .success-message, .warning-message, .info-message",
       )
       .forEach((el) => (el.style.display = "none"));
-      
+
     // ========== TAMBAHKAN INI ==========
     if (forgotPasswordError) forgotPasswordError.style.display = "none";
     // ========== SAMPAI DI SINI ==========
@@ -309,22 +322,25 @@ document.addEventListener("DOMContentLoaded", () => {
     resetErrorMessages();
 
     const email = forgotEmailInput.value.trim();
-    const newPassword = forgotPasswordInput ? forgotPasswordInput.value.trim() : "";
+    const newPassword = forgotPasswordInput
+      ? forgotPasswordInput.value.trim()
+      : "";
 
     if (!email) {
       forgotEmailError.style.display = "block";
       return;
     }
-    
+
     // ========== TAMBAHKAN VALIDASI INI ==========
     if (!newPassword) {
       forgotPasswordError.textContent = "New password must be filled";
       forgotPasswordError.style.display = "block";
       return;
     }
-    
+
     if (newPassword.length < 6) {
-      forgotPasswordError.textContent = "Password must be at least 6 characters";
+      forgotPasswordError.textContent =
+        "Password must be at least 6 characters";
       forgotPasswordError.style.display = "block";
       return;
     }
@@ -357,15 +373,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // Placeholder logic:
     // ========== PERBAIKAN API CALL INI ==========
     try {
-      const res = await api.post("/auth/forgot-password", { 
-        email: email, 
-        password: newPassword 
+      const res = await api.post("/auth/forgot-password", {
+        email: email,
+        password: newPassword,
       });
-      
+
       if (res.success || res.message) {
         forgotSuccess.style.display = "block";
         forgotEmailInfo.style.display = "block";
-        
+
         // Reset form setelah sukses
         setTimeout(() => {
           forgotEmailInput.value = "";
@@ -377,7 +393,8 @@ document.addEventListener("DOMContentLoaded", () => {
         forgotEmailError.style.display = "block";
       }
     } catch (error) {
-      forgotEmailError.textContent = "Failed to reset password. Please try again.";
+      forgotEmailError.textContent =
+        "Failed to reset password. Please try again.";
       forgotEmailError.style.display = "block";
     }
     // ========== SAMPAI DI SINI ==========

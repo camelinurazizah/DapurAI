@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DapurAI — Profil Pengguna</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
       .profile-container {
         max-width: 800px;
@@ -152,7 +153,10 @@
     </div>
 
     <div class="profile-container">
-      <a href="index.html" class="back-btn">← Kembali ke Generator</a>
+      <a href="index.html" class="back-btn"
+        ><i data-lucide="arrow-left" style="width: 16px; height: 16px"></i>
+        Kembali ke Generator</a
+      >
 
       <div class="profile-card">
         <div class="profile-header">
@@ -165,7 +169,7 @@
 
         <form id="preferencesForm">
           <div class="section-title">
-            <span>⚙️</span> Preferensi Diet (Global)
+            <i data-lucide="settings"></i> Preferensi Diet (Global)
           </div>
           <p style="margin-bottom: 20px; font-size: 14px; color: #666">
             Pengaturan ini akan diterapkan secara otomatis setiap kali Anda
@@ -206,7 +210,7 @@
           </div>
 
           <div class="section-title">
-            <span>📝</span> Catatan Tambahan Default
+            <i data-lucide="file-text"></i> Catatan Tambahan Default
           </div>
           <div class="form-group" style="margin-bottom: 30px">
             <label>Instruksi Khusus (Optional)</label>
@@ -320,13 +324,13 @@
             const updateRes = await api.post(
               "/profile/preferences",
               dbData,
-              token
+              token,
             );
 
             // Save to LocalStorage
             localStorage.setItem(
               "dapurai_default_adjustment",
-              defaultAdjustment.value
+              defaultAdjustment.value,
             );
 
             saveBtn.disabled = false;
@@ -338,11 +342,14 @@
             } else {
               alert(
                 "Gagal menyimpan ke database: " +
-                  (updateRes.message || updateRes.error)
+                  (updateRes.message || updateRes.error),
               );
             }
           });
       });
+    </script>
+    <script>
+      lucide.createIcons();
     </script>
   </body>
 </html>

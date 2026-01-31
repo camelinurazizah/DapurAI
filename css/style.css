@@ -13,8 +13,14 @@
   --facebook: #1877f2;
   --twitter: #000000;
   --google: #db4437;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
 }
 
 /* Mode Gelap */
@@ -39,7 +45,9 @@ body {
   color: #2a2a2a;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
 }
 
 [data-theme="dark"] body {
@@ -480,8 +488,14 @@ body {
   background: #f9f9f9;
   color: #333;
   transition: all 0.3s ease;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
 }
 
 [data-theme="dark"] .form-group input {
@@ -948,7 +962,9 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 [data-theme="dark"] header {
@@ -1175,7 +1191,9 @@ select {
   min-width: 0;
   background: var(--card);
   color: inherit;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
 }
 
 [data-theme="dark"] input[type="text"],
@@ -1207,6 +1225,7 @@ button.primary:hover {
 
 .cta {
   display: inline-flex;
+  width: 100%;
   align-items: center;
   gap: 8px;
   margin-top: 18px;
@@ -1274,14 +1293,15 @@ button.primary:hover {
   flex: 1;
   box-shadow: var(--shadow);
   min-width: 180px;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
 .feature-icon {
-  font-size: 24px;
   margin-bottom: 8px;
   width: 40px;
   height: 40px;
@@ -1298,7 +1318,9 @@ button.primary:hover {
   padding: 18px;
   border-radius: 12px;
   box-shadow: var(--shadow);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .result h3 {
@@ -1322,7 +1344,9 @@ button.primary:hover {
   padding: 8px 10px;
   border-radius: 999px;
   border: 1px dashed #ffd6a5;
-  transition: background 0.3s ease, border 0.3s ease;
+  transition:
+    background 0.3s ease,
+    border 0.3s ease;
 }
 
 [data-theme="dark"] .ing {
@@ -1342,7 +1366,9 @@ button.primary:hover {
   border: 1px solid #eee;
   background: #fff;
   cursor: pointer;
-  transition: background 0.3s ease, border 0.3s ease;
+  transition:
+    background 0.3s ease,
+    border 0.3s ease;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -1363,7 +1389,9 @@ button.primary:hover {
   box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 #tentang::before {
@@ -1383,11 +1411,6 @@ button.primary:hover {
   font-size: 28px;
   margin-bottom: 24px;
   color: var(--accent);
-}
-
-#tentang h2::before {
-  content: "🍳";
-  font-size: 32px;
 }
 
 #tentang p {
@@ -1426,7 +1449,9 @@ button.primary:hover {
   background: #fffaf0;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1446,34 +1471,22 @@ button.primary:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-#tentang ul li::before {
-  content: "";
-  width: 24px;
-  height: 24px;
+.list-icon {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background-color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 14px;
+  padding: 5px;
   flex-shrink: 0;
 }
 
-#tentang ul li:nth-child(1)::before {
-  content: "💡";
-}
-#tentang ul li:nth-child(2)::before {
-  content: "⏱️";
-}
-#tentang ul li:nth-child(3)::before {
-  content: "🌱";
-}
-#tentang ul li:nth-child(4)::before {
-  content: "🍲";
-}
-#tentang ul li:nth-child(5)::before {
-  content: "🤖";
+/* Lucide Generic */
+[data-lucide] {
+  vertical-align: middle;
 }
 
 #kontak {
@@ -1482,7 +1495,9 @@ button.primary:hover {
   padding: 30px 28px;
   border-radius: 16px;
   box-shadow: var(--shadow);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 #kontak h2 {
@@ -1509,7 +1524,9 @@ button.primary:hover {
   width: 100%;
   background: var(--card);
   color: inherit;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease;
 }
 
 [data-theme="dark"] #kontak input,
@@ -1547,7 +1564,8 @@ button.primary:hover {
 }
 
 .rating-stars label {
-  font-size: 28px;
+  /* font-size: 28px; Removed for Lucide */
+
   color: #ddd;
   cursor: pointer;
   transition: color 0.2s;
@@ -1563,8 +1581,11 @@ button.primary:hover {
   color: #ffc107;
 }
 
-.rating-stars label.active {
-  color: #ffc107;
+/* Active state handled by color inheritance */
+.rating-stars label svg {
+  width: 28px;
+  height: 28px;
+  pointer-events: none; /* Ensure click goes to label */
 }
 
 .rating-value {
@@ -1581,7 +1602,9 @@ button.primary:hover {
   margin-bottom: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
   border-left: 4px solid var(--accent);
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 [data-theme="dark"] .review-item {
@@ -1872,25 +1895,25 @@ footer {
   nav {
     display: none !important;
   }
-  
+
   .hamburger-menu {
     display: flex !important;
   }
-  
+
   .logo {
     flex: 1;
   }
-  
+
   header {
     padding: 16px 20px;
     position: relative;
   }
-  
+
   /* Sembunyikan user info di navbar desktop */
   .user-info {
     display: none !important;
   }
-  
+
   /* Sidebar user info */
   .sidebar .user-info {
     display: flex !important;
@@ -2068,19 +2091,19 @@ footer {
   .sidebar {
     display: none;
   }
-  
+
   .overlay {
     display: none;
   }
-  
+
   .hamburger-menu {
     display: none !important;
   }
-  
+
   nav {
     display: flex !important;
   }
-  
+
   .user-info {
     display: flex !important;
   }

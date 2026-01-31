@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="utf-8" />
@@ -6,6 +6,7 @@
     <title>DapurAI — Generator Resep Pintar</title>
     <link rel="stylesheet" href="css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
     <!-- Loading Overlay -->
@@ -73,7 +74,7 @@
         <div class="logout-actions">
           <button class="cancel-btn" id="cancelLogout">Batal</button>
           <button class="confirm-logout-btn" id="confirmLogout">
-            <span>🚪</span> Ya, Keluar
+            <i data-lucide="log-out"></i> Ya, Keluar
           </button>
         </div>
       </div>
@@ -91,17 +92,17 @@
         </div>
 
         <nav>
-          <a href="#" id="homeLink"><span>🏠</span> Home</a>
-          <a href="#generator"><span>✨</span> Generator</a>
-          <a href="#tentang"><span>ℹ️</span> Tentang</a>
-          <a href="#kontak"><span>💬</span> Ulasan</a>
+          <a href="#" id="homeLink"><i data-lucide="home"></i> Home</a>
+          <a href="#generator"><i data-lucide="sparkles"></i> Generator</a>
+          <a href="#tentang"><i data-lucide="info"></i> Tentang</a>
+          <a href="#kontak"><i data-lucide="message-circle"></i> Ulasan</a>
 
           <!-- User Info -->
           <div class="user-info" id="userInfo">
             <div class="user-avatar" id="userAvatar">U</div>
             <div class="user-name" id="userName">User</div>
             <button class="logout-btn" id="logoutBtn" title="Keluar">
-              <span>🚪</span> Keluar
+              <i data-lucide="log-out"></i> Keluar
             </button>
           </div>
 
@@ -110,8 +111,8 @@
             id="themeToggle"
             aria-label="Toggle theme"
           >
-            <span class="dark-icon">🌙</span>
-            <span class="light-icon">☀️</span>
+            <span class="dark-icon"><i data-lucide="moon"></i></span>
+            <span class="light-icon"><i data-lucide="sun"></i></span>
           </button>
         </nav>
 
@@ -125,10 +126,10 @@
 
       <!-- Sidebar -->
       <div class="sidebar">
-        <a href="#" id="homeLinkSidebar"><span>🏠</span> Home</a>
-        <a href="#generator"><span>✨</span> Generator</a>
-        <a href="#tentang"><span>ℹ️</span> Tentang</a>
-        <a href="#kontak"><span>💬</span> Ulasan</a>
+        <a href="#" id="homeLinkSidebar"><i data-lucide="home"></i> Home</a>
+        <a href="#generator"><i data-lucide="sparkles"></i> Generator</a>
+        <a href="#tentang"><i data-lucide="info"></i> Tentang</a>
+        <a href="#kontak"><i data-lucide="message-circle"></i> Ulasan</a>
 
         <!-- User Info in Sidebar -->
         <div
@@ -145,7 +146,7 @@
           id="logoutBtnSidebar"
           style="justify-content: flex-start; padding: 12px; margin-top: 10px"
         >
-          <span>🚪</span> Keluar dari Akun
+          <i data-lucide="log-out"></i> Keluar dari Akun
         </button>
 
         <button
@@ -154,8 +155,16 @@
           aria-label="Toggle theme"
           style="justify-content: flex-start; padding: 12px"
         >
-          <span class="dark-icon">🌙 Mode Gelap</span>
-          <span class="light-icon">☀️ Mode Terang</span>
+          <span
+            class="dark-icon"
+            style="display: flex; gap: 8px; align-items: center"
+            ><i data-lucide="moon"></i> Mode Gelap</span
+          >
+          <span
+            class="light-icon"
+            style="display: flex; gap: 8px; align-items: center"
+            ><i data-lucide="sun"></i> Mode Terang</span
+          >
         </button>
       </div>
 
@@ -188,17 +197,17 @@
                 <option value="Makanan Berat">Masakan Berat</option>
               </select>
               <button class="primary" id="generateBtn">
-                <span>✨</span> Generate
+                <i data-lucide="sparkles"></i> Generate
               </button>
             </div>
 
             <a class="cta" href="#result" id="tryBtn"
-              ><span>🚀</span> Coba Generator AI Sekarang →</a
+              ><i data-lucide="rocket"></i> Coba Generator AI Sekarang →</a
             >
 
             <div class="features">
               <div class="feature">
-                <div class="feature-icon">🥗</div>
+                <div class="feature-icon"><i data-lucide="salad"></i></div>
                 <strong>Masakan Sehat</strong>
                 <div
                   style="color: var(--muted); font-size: 13px; margin-top: 6px"
@@ -208,7 +217,7 @@
                 </div>
               </div>
               <div class="feature">
-                <div class="feature-icon">👶</div>
+                <div class="feature-icon"><i data-lucide="baby"></i></div>
                 <strong>Masakan Bayi</strong>
                 <div
                   style="color: var(--muted); font-size: 13px; margin-top: 6px"
@@ -218,7 +227,9 @@
                 </div>
               </div>
               <div class="feature">
-                <div class="feature-icon">🍛</div>
+                <div class="feature-icon">
+                  <i data-lucide="utensils-crossed"></i>
+                </div>
                 <strong>Masakan Berat</strong>
                 <div
                   style="color: var(--muted); font-size: 13px; margin-top: 6px"
@@ -245,15 +256,20 @@
           <div class="ing-list" id="ingredientsList"></div>
           <div style="margin-top: 12px" id="steps"></div>
           <div class="controls">
-            <button class="small" id="shareBtn"><span>📤</span> Share</button>
+            <button class="small" id="shareBtn">
+              <i data-lucide="share-2"></i> Share
+            </button>
             <button class="small" id="clearBtn">
-              <span>🧹</span> Bersihkan
+              <i data-lucide="eraser"></i> Bersihkan
             </button>
           </div>
         </section>
 
         <section id="tentang">
-          <h2>Tentang DapurAI</h2>
+          <h2>
+            <i data-lucide="chef-hat" style="margin-right: 12px"></i> Tentangg
+            DapurAI
+          </h2>
           <p>
             <strong>DapurAI</strong> adalah aplikasi website berbasis kecerdasan
             buatan (AI) yang membantu pengguna menemukan ide resep masakan dari
@@ -285,11 +301,26 @@
 
           <p><strong>Manfaat DapurAI:</strong></p>
           <ul>
-            <li>Memberi inspirasi resep dari bahan sederhana</li>
-            <li>Menghemat waktu dalam menentukan menu harian</li>
-            <li>Membantu mengurangi food waste</li>
-            <li>Mendorong gaya hidup sehat dengan resep seimbang</li>
-            <li>Mengintegrasikan teknologi AI dalam dunia kuliner</li>
+            <li>
+              <i data-lucide="lightbulb" class="list-icon"></i> Memberi
+              inspirasi resep dari bahan sederhana
+            </li>
+            <li>
+              <i data-lucide="clock" class="list-icon"></i> Menghemat waktu
+              dalam menentukan menu harian
+            </li>
+            <li>
+              <i data-lucide="sprout" class="list-icon"></i> Membantu mengurangi
+              food waste
+            </li>
+            <li>
+              <i data-lucide="soup" class="list-icon"></i> Mendorong gaya hidup
+              sehat dengan resep seimbang
+            </li>
+            <li>
+              <i data-lucide="bot" class="list-icon"></i> Mengintegrasikan
+              teknologi AI dalam dunia kuliner
+            </li>
           </ul>
         </section>
 
@@ -306,20 +337,30 @@
 
             <div class="rating-container">
               <div class="rating-title">
-                <span>⭐</span> Rating:
+                <i data-lucide="star"></i> Rating:
                 <span class="rating-value" id="ratingValue">0/5</span>
               </div>
               <div class="rating-stars">
                 <input type="radio" id="star5" name="rating" value="5" />
-                <label for="star5" title="5 stars">★</label>
+                <label for="star5" title="5 stars"
+                  ><i data-lucide="star" fill="currentColor"></i
+                ></label>
                 <input type="radio" id="star4" name="rating" value="4" />
-                <label for="star4" title="4 stars">★</label>
+                <label for="star4" title="4 stars"
+                  ><i data-lucide="star" fill="currentColor"></i
+                ></label>
                 <input type="radio" id="star3" name="rating" value="3" />
-                <label for="star3" title="3 stars">★</label>
+                <label for="star3" title="3 stars"
+                  ><i data-lucide="star" fill="currentColor"></i
+                ></label>
                 <input type="radio" id="star2" name="rating" value="2" />
-                <label for="star2" title="2 stars">★</label>
+                <label for="star2" title="2 stars"
+                  ><i data-lucide="star" fill="currentColor"></i
+                ></label>
                 <input type="radio" id="star1" name="rating" value="1" />
-                <label for="star1" title="1 star">★</label>
+                <label for="star1" title="1 star"
+                  ><i data-lucide="star" fill="currentColor"></i
+                ></label>
               </div>
             </div>
 
@@ -330,7 +371,7 @@
               required
             ></textarea>
             <button type="submit" class="primary">
-              <span>📨</span> Kirim Ulasan
+              <i data-lucide="send"></i> Kirim Ulasan
             </button>
           </form>
 
@@ -346,5 +387,8 @@
 
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>

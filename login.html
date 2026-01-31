@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="utf-8" />
@@ -6,13 +6,14 @@
     <title>DapurAI — Login</title>
     <!-- Link to external CSS if needed, or keep internal -->
     <link rel="stylesheet" href="css/login.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
     <div class="login-container">
       <!-- Theme Toggle Button -->
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <span class="dark-icon">🌙</span>
-        <span class="light-icon">☀️</span>
+        <span class="dark-icon"><i data-lucide="moon"></i></span>
+        <span class="light-icon"><i data-lucide="sun"></i></span>
       </button>
 
       <!-- Logo/Header -->
@@ -36,7 +37,9 @@
               placeholder="Type your email"
               required
             />
-            <span class="register-input-icon">📧</span>
+            <div class="input-icon-right" style="right: 15px">
+              <i data-lucide="mail"></i>
+            </div>
             <div class="error-message" id="usernameError">
               Username or email must be filled
             </div>
@@ -53,7 +56,7 @@
               required
             />
             <button type="button" class="password-toggle" id="passwordToggle">
-              <span id="eyeIcon">👁️</span>
+              <span id="eyeIcon"><i data-lucide="eye"></i></span>
             </button>
             <div class="error-message" id="passwordError">
               Password must be filled
@@ -86,9 +89,10 @@
       </form>
 
       <!-- Register Form -->
-      <form class="register-form" id="registerForm" style="display: none;">
+      <form class="register-form" id="registerForm" style="display: none">
         <a class="back-to-login" id="backToLoginFromRegister">
-          <span>←</span> Back to Login
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px"></i>
+          Back to Login
         </a>
         <div class="login-header">
           <h2>Create New Account</h2>
@@ -105,7 +109,7 @@
               placeholder="Enter your full name"
               required
             />
-            <span class="register-input-icon">👤</span>
+            <div class="register-input-icon"><i data-lucide="user"></i></div>
             <div class="error-message" id="regNameError">
               Full name must be filled
             </div>
@@ -122,7 +126,7 @@
               placeholder="Enter your email"
               required
             />
-            <span class="register-input-icon">📧</span>
+            <div class="register-input-icon"><i data-lucide="mail"></i></div>
             <div class="error-message" id="regEmailError">
               Email must be filled
             </div>
@@ -144,7 +148,7 @@
               class="password-toggle"
               id="regPasswordToggle"
             >
-              <span id="regEyeIcon">👁️</span>
+              <span id="regEyeIcon"><i data-lucide="eye"></i></span>
             </button>
             <div class="error-message" id="regPasswordError">
               Password must be at least 6 characters
@@ -167,7 +171,7 @@
               class="password-toggle"
               id="regConfirmPasswordToggle"
             >
-              <span id="regConfirmEyeIcon">👁️</span>
+              <span id="regConfirmEyeIcon"><i data-lucide="eye"></i></span>
             </button>
             <div class="error-message" id="regConfirmPasswordError">
               Password confirmation doesn't match
@@ -188,9 +192,10 @@
       </form>
 
       <!-- Forgot Password Form -->
-      <form class="forgot-form" id="forgotForm" style="display: none;">
+      <form class="forgot-form" id="forgotForm" style="display: none">
         <a class="back-to-login" id="backToLoginFromForgot">
-          <span>←</span> Back to Login
+          <i data-lucide="arrow-left" style="width: 16px; height: 16px"></i>
+          Back to Login
         </a>
         <div class="login-header">
           <h2>Forgot Password</h2>
@@ -206,7 +211,7 @@
               placeholder="Enter your email"
               required
             />
-            <span class="input-icon-right">📧</span>
+            <div class="input-icon-right"><i data-lucide="mail"></i></div>
             <div class="error-message" id="forgotEmailError">
               Email must be filled
             </div>
@@ -226,8 +231,12 @@
               placeholder="Enter new password"
               required
             />
-            <button type="button" class="password-toggle" id="forgotPasswordToggle">
-              <span id="forgotEyeIcon">👁️</span>
+            <button
+              type="button"
+              class="password-toggle"
+              id="forgotPasswordToggle"
+            >
+              <span id="forgotEyeIcon"><i data-lucide="eye"></i></span>
             </button>
             <div class="error-message" id="forgotPasswordError">
               Password must be filled
@@ -245,5 +254,8 @@
 
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>

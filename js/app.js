@@ -278,9 +278,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   function createStarRating(rating) {
     let stars = "";
     for (let i = 1; i <= 5; i++) {
-      stars += i <= rating ? "★" : "☆";
+      if (i <= rating) {
+        // Full star
+        stars += `<i data-lucide="star" fill="currentColor" style="width: 16px; height: 16px;"></i>`;
+      } else {
+        // Empty star
+        stars += `<i data-lucide="star" style="width: 16px; height: 16px;"></i>`;
+      }
     }
-    return `<span class="star-rating">${stars}</span>`;
+    return `<div class="star-rating" style="display: flex; gap: 2px;">${stars}</div>`;
   }
 
   // Fetch Reviews
@@ -319,6 +325,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         '<div class="no-reviews">Belum ada ulasan. Jadilah yang pertama!</div>';
     }
     hideLoading();
+    // Re-initialize icons for the newly added reviews
+    lucide.createIcons();
   }
 
   // Load initial

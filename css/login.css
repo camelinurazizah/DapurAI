@@ -13,8 +13,14 @@
   --facebook: #1877f2;
   --twitter: #000000;
   --google: #db4437;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
 }
 
 /* Mode Gelap */
@@ -36,13 +42,16 @@
 body {
   margin: 0;
   /* GANTI: Menggunakan gambar background */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../logiin.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #2a2a2a;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -54,7 +63,8 @@ body {
 /* Contoh: background: url('img/background-login.jpg') no-repeat center center fixed; */
 
 [data-theme="dark"] body {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("../logiin.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #f0f0f0;
@@ -197,8 +207,14 @@ body {
   background: #f9f9f9;
   color: #333;
   transition: all 0.3s ease;
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
 }
 
 [data-theme="dark"] .form-group input {
@@ -234,7 +250,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
   color: #999;
-  font-size: 18px;
+  width: 20px;
+  height: 20px;
   z-index: 1;
 }
 
@@ -249,7 +266,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
   color: #999;
-  font-size: 18px;
+  width: 20px;
+  height: 20px;
   z-index: 1;
 }
 
@@ -264,9 +282,9 @@ body {
   top: 50%;
   transform: translateY(-50%);
   color: #999;
-  font-size: 18px;
+  width: 20px;
+  height: 20px;
   z-index: 1;
-  
 }
 
 [data-theme="dark"] .register-input-icon {
@@ -282,7 +300,6 @@ body {
   border: none;
   color: #999;
   cursor: pointer;
-  font-size: 18px;
   padding: 0;
   width: 24px;
   height: 24px;
@@ -324,7 +341,7 @@ body {
 /* Khusus untuk input register tanpa ikon kiri */
 .register-input-no-left-icon {
   padding-left: 15px !important;
-  padding-right: 50px !important;/* Memberi ruang untuk ikon di kanan */
+  padding-right: 50px !important; /* Memberi ruang untuk ikon di kanan */
 }
 
 /* Checkbox Styles */
